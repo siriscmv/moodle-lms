@@ -1,0 +1,13 @@
+extends:
+  - '@commitlint/config-conventional'
+rules:
+  type-case:
+    - 0
+  body-case:
+    - 0
+  header-case:
+    - 0
+  scope-case:
+    - 0
+  subject-case:
+    - 0
