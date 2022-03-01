@@ -10,7 +10,6 @@
 		"strictPropertyInitialization": true,
 		"noImplicitThis": true,
 		"noImplicitOverride": true,
-		"skipLibCheck": true,
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,
 		"importHelpers": true,
@@ -30,6 +29,6 @@
 		"target": "es2020",
 		"useDefineForClassFields": true
 	},
-	"include": ["src/**/*.ts", "src/*.ts"],
-	"exclude": ["node_modules", "*.d.ts", "**/*_.ts", "**/*_n.ts", "**/*_cm.ts", "dist"]
+	"include": ["src/**/*.ts", "src/*.ts", "*.d.ts"],
+	"exclude": ["node_modules", "dist"]
 }

@@ -4,5 +4,5 @@ node_modules/
 package-lock.json
 dist/
 todo.md
-*.sql
+*.toml
 dump*

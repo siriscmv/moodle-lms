@@ -5,4 +5,5 @@ export type cache = {
 } & {
 	lastLogin: number;
 	cookie: string;
+	courses: { name: string; id: typeof courses[number] }[];
 };

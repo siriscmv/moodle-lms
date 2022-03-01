@@ -1,0 +1,2 @@
+- A Work in progress appliction that parses / scrapes moodle based websites for assignments.
+- Built using HTTP interactions in discord
