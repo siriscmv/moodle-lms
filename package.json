@@ -19,7 +19,8 @@
 		"express": "^4.17.3",
 		"node-fetch": "^2.6.6",
 		"puppeteer": "^13.4.0",
-		"slash-create": "^5.2.1"
+		"slash-create": "^5.2.1",
+		"typescript": "^4.6.2"
 	},
 	"devDependencies": {
 		"@types/node-fetch": "^2.6.1"
