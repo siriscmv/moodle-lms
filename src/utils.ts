@@ -13,7 +13,7 @@ export async function login(cache: Settings, timeout = 15 * 1000) {
 			reject(`Timed out after ${timeout}ms`);
 		}, timeout);
 		const browser = await puppeteer.launch({
-			args: ['--no-sandbox', '--disable-setuid-sandbox']
+			args: ['--no-sandbox']
 		});
 		const page = await browser.newPage();
 
