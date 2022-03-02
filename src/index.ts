@@ -35,7 +35,7 @@ app.db = db;
 app.commands = new Collection();
 
 async function init() {
-	const cookie = await login(db).catch(console.error);
+	const cookie = await login(db, 45 * 1000).catch(console.error);
 	if (!cookie) return;
 
 	db.set('cookie', cookie);
