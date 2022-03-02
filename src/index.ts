@@ -45,7 +45,7 @@ async function init() {
 		await Promise.all(
 			readdirSync('./dist/commands')
 				.filter((f) => f.endsWith('.js'))
-				.map((f) => import(`./commands/${f}`))
+				.map((f) => import(`./commands/${f}?d=${Date.now()}`))
 		)
 	).map((d) => d.default);
 
