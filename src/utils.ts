@@ -12,7 +12,9 @@ export async function login(cache: Settings, timeout = 15 * 1000) {
 		setTimeout(() => {
 			reject(`Timed out after ${timeout}ms`);
 		}, timeout);
-		const browser = await puppeteer.launch();
+		const browser = await puppeteer.launch({
+			args: ['--no-sandbox']
+		});
 		const page = await browser.newPage();
 
 		let isAuthenticated = false;
