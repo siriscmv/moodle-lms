@@ -1,19 +1,10 @@
-import { CommandContext, SlashCommand, SlashCreator } from 'slash-create';
-import { mainServers } from '../constants.js';
+import { CommandInteraction, SnowflakeUtil } from 'discord.js';
 
-export default class PingCommand extends SlashCommand {
-	constructor(app: SlashCreator) {
-		super(app, {
-			name: 'ping',
-			description: "Test the bot's ping",
-			guildIDs: mainServers
-		});
+export default {
+	name: 'ping',
+	async run(ctx: CommandInteraction) {
+		const sent = await ctx.reply({ content: 'Pinging...', ephemeral: true, fetchReply: true });
+		const ping = SnowflakeUtil.deconstruct(sent.id).timestamp - ctx.createdTimestamp;
+		return ctx.editReply(`Pong! Latency is \`${ping}\`ms.`);
 	}
-
-	override async run(ctx: CommandContext) {
-		await ctx.send('Pinging...', { ephemeral: true });
-		const sent = await ctx.fetch();
-
-		await sent.edit(`Pong! Latency is \`${ctx.invokedAt - sent.timestamp}\`ms.`);
-	}
-}
+};
