@@ -1,9 +1,13 @@
-import { login } from './utils.js';
-import Settings from './Settings.js';
+import { login, sync, initDB } from './utils.js';
 import { Client, Collection, Options } from 'discord.js';
 import { readdirSync } from 'fs';
 
-const db = new Settings();
+const cache = {
+	lastLogin: 0,
+	cookie: '',
+	courses: []
+};
+
 const app = new Client({
 	intents: [],
 	makeCache: Options.cacheWithLimits({
@@ -31,15 +35,15 @@ const app = new Client({
 	})
 });
 
-app.db = db;
+app.cache = cache;
 app.commands = new Collection();
 
 async function init() {
-	const cookie = await login(db, 45 * 1000).catch(console.error);
+	const cookie = await login(app.cache, 45 * 1000).catch(console.error);
 	if (!cookie) return;
 
-	db.set('cookie', cookie);
-	db.set('lastLogin', Date.now());
+	app.cache.cookie = cookie;
+	app.cache.lastLogin = Date.now();
 
 	const commands = (
 		await Promise.all(
@@ -52,15 +56,20 @@ async function init() {
 	for (const c of commands) {
 		app.commands.set(c.name, c);
 	}
-
-	await app.login(process.env.TOKEN!);
-	console.log('Ready!');
+	await initDB(app);
+	await sync(app);
 }
 
-init();
+app.on('ready', () => init());
 
 app.on('interactionCreate', (ctx) => {
 	if (ctx.isCommand()) {
 		app.commands.get(ctx.commandName)?.run(ctx);
 	}
 });
+
+setInterval(async () => await sync(app), 30 * 60 * 1000);
+app.login(process.env.TOKEN!);
+
+process.on('unhandledRejection', (e) => console.error(e));
+process.on('uncaughtException', (e) => console.error(e));

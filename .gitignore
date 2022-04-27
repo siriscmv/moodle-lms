@@ -6,3 +6,4 @@ dist/
 todo.md
 *.toml
 dump*
+*.sqlite

@@ -1,18 +1,34 @@
 import type { Collection } from 'discord.js';
 import type { courses } from './constants.js';
-import type Settings from './Settings.js';
+import type { Model, ModelStatic } from 'sequelize';
 
-export type cache = {
-	[index in typeof courses[number]]: string[];
-} & {
+export type Cache = {
 	lastLogin: number;
 	cookie: string;
 	courses: { name: string; id: typeof courses[number] }[];
 };
 
+/*
+{
+	[index in typeof courses[number]]: string[];
+} &
+*/
+
+export interface AssignmentsAttributes {
+	id: number;
+	name: string;
+	file: string;
+	due: number;
+	course: number;
+}
+
+export interface AssignmentsInstance
+	extends Model<AssignmentsAttributes, AssignmentsAttributes>,
+		AssignmentsAttributes {}
+
 declare module 'discord.js' {
 	export interface Client {
-		db: Settings;
+		assignments: ModelStatic<AssignmentsInstance>;
 		commands: Collection<
 			string,
 			{
@@ -20,5 +36,6 @@ declare module 'discord.js' {
 				run(ctx: CommandInteraction): Promise<unknown>;
 			}
 		>;
+		cache: Cache;
 	}
 }

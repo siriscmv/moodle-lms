@@ -9,7 +9,7 @@
 		"build": "rm -rf dist && mkdir dist && tsc",
 		"start": "npm run build && node -r dotenv/config dist/index.js",
 		"sync": "npm run build && node -r dotenv/config dist/sync.js",
-		"pm2": "npm run build && pm2 start --name moodle --node-args=\"-r dotenv/config\" dist/index.js"
+		"pm2": "npm run build && pm2 start --name tasks --node-args=\"-r dotenv/config\" dist/index.js"
 	},
 	"keywords": [],
 	"author": "Siris",
@@ -21,6 +21,9 @@
 		"express": "^4.17.3",
 		"node-fetch": "^2.6.6",
 		"puppeteer": "^13.4.0",
+		"sequelize": "^6.19.0",
+		"sqlite": "^4.1.1",
+		"sqlite3": "^5.0.6",
 		"typescript": "^4.6.2"
 	},
 	"devDependencies": {

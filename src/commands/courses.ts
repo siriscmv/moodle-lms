@@ -8,26 +8,47 @@ export default {
 		await ctx.deferReply();
 
 		if (ctx.options.getString('course')) {
-			const assignments = await load(ctx.client.db, ctx.options.getString('course')! as typeof courses[number]);
+			const assignments = await load(ctx.client.cache, ctx.options.getString('course')! as typeof courses[number]);
 			const data = scrapeAssignments(assignments);
 
-			const em = new MessageEmbed()
+			const main = new MessageEmbed()
 				.setTitle(data.name.slice(0, 50))
-				.setURL(`https://${process.env.HOST}/course/view.php?id=${ctx.options.getString('course')!}`)
-				.addField(
-					'Resources',
-					data.resources.length ? data.resources.map((r) => `[${r.name}](${r.url})`).join('\n') : 'None',
-					false
-				)
-				.addField(
-					'Assignments',
-					data.assignments.length ? data.assignments.map((a) => `[${a.name}](${a.url})`).join('\n') : 'None',
-					false
-				);
+				.setURL(`https://${process.env.HOST}/course/view.php?id=${ctx.options.getString('course')!}`);
 
-			return ctx.editReply({ embeds: [em] });
+			const embeds: MessageEmbed[] = [];
+
+			if (data.resources.length) {
+				const pages = data.resources.length / 15;
+				for (let i = 0; i < pages; i++) {
+					const embed = new MessageEmbed().setTitle(`Resources #${i + 1}`).setDescription(
+						data.resources
+							.slice(i * 15, (i + 1) * 15)
+							.map((r) => `[${r.name}](${r.url})`)
+							.join('\n')
+					);
+
+					embeds.push(embed);
+				}
+			}
+
+			if (data.assignments.length) {
+				const pages = data.assignments.length / 15;
+
+				for (let i = 0; i < pages; i++) {
+					const embed = new MessageEmbed().setTitle(`Assignments #${i + 1}`).setDescription(
+						data.assignments
+							.slice(i * 15, (i + 1) * 15)
+							.map((a) => `[${a.name}](${a.url})`)
+							.join('\n')
+					);
+
+					embeds.push(embed);
+				}
+			}
+
+			return ctx.editReply({ embeds: [main, ...embeds] });
 		} else {
-			const courses = await getAllCourses(ctx.client.db);
+			const courses = await getAllCourses(ctx.client.cache);
 			const em = new MessageEmbed()
 				.setTitle('Courses')
 				.setDescription(
