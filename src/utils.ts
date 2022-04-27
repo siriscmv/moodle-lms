@@ -165,7 +165,7 @@ export async function sync(app: Client) {
 	for (const a of newAssignments) {
 		const em = new MessageEmbed()
 			.setTitle('New assignment')
-			.addField('Course', app.cache.courses.find((c) => `${c.id}` === `${a.course}`)!.name.slice(20))
+			.addField('Course', app.cache.courses.find((c) => `${c.id}` === `${a.course}`)!.name.slice(0, 20))
 			.addField('Name', `[${a.name}](https://${process.env.HOST}/mod/assign/view.php?id=${a.id})`)
 			.addField('Due', `<t:${Math.round(a.due / 1000)}:R>`);
 
