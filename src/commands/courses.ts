@@ -42,7 +42,10 @@ export default {
 					const embed = new MessageEmbed().setTitle(`Assignments #${i + 1}`).setDescription(
 						data.assignments
 							.slice(i * 15, (i + 1) * 15)
-							.map((a) => `[${a.name}](${a.url}) ${stored.some((s) => s.name === a.name)? `<t:${stored.find(s => s.name === a.name)}:R>`: ''})}`)
+							.map((a) => {
+								const id = new URL(a.url).searchParams.get('id')!
+								return `[${a.name}](${a.url}) ${stored.some((s) => `${s.id}` === `${a.id}`)? `<t:${stored.find(s => s.name === a.name)}:R>`: ''}`
+							})
 							.join('\n')
 					);
 
