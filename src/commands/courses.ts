@@ -44,7 +44,7 @@ export default {
 							.slice(i * 15, (i + 1) * 15)
 							.map((a) => {
 								const id = new URL(a.url).searchParams.get('id')!
-								return `[${a.name}](${a.url}) ${stored.some((s) => `${s.id}` === `${a.id}`)? `<t:${stored.find(s => s.name === a.name)}:R>`: ''}`
+								return `[${a.name}](${a.url}) ${stored.some((s) => `${s.id}` === `${id}`)? `<t:${stored.find(s => s.name === a.name)}:R>`: ''}`
 							})
 							.join('\n')
 					);
