@@ -22,10 +22,9 @@ export default {
 			.setDescription(
 				latest
 					.map((a) => {
-						const course = ctx.client.cache.courses.find((c) => `${c.id}` === `${a.course}`)!;
-						return `${course.name.slice(0, 10)} - [${a.name}](https://${process.env.HOST}/mod/assign/view.php?id=${
-							a.id
-						})`;
+						return `[${a.name}](https://${process.env.HOST}/mod/assign/view.php?id=${a.id}) <t:${Math.round(
+							a.due / 100
+						)}:R>`;
 					})
 					.join('\n')
 			);
