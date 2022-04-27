@@ -45,7 +45,9 @@ export default {
 							.map((a) => {
 								const id = new URL(a.url).searchParams.get('id')!;
 								return `[${a.name}](${a.url}) ${
-									stored.some((s) => `${s.id}` === `${id}`) ? `<t:${stored.find((s) => `${s.id}` === `${id}`)}:R>` : ''
+									stored.some((s) => `${s.id}` === `${id}`)
+										? `<t:${Math.round(stored.find((s) => `${s.id}` === `${id}`)!.due / 1000)}:R>`
+										: ''
 								}`;
 							})
 							.join('\n')
