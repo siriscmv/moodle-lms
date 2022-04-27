@@ -34,11 +34,15 @@ export default {
 			if (data.assignments.length) {
 				const pages = data.assignments.length / 15;
 
+				const stored = await ctx.client.assignments.findAll({
+					where: { course: parseInt(ctx.options.getString('course')!) }
+				});
+
 				for (let i = 0; i < pages; i++) {
 					const embed = new MessageEmbed().setTitle(`Assignments #${i + 1}`).setDescription(
 						data.assignments
 							.slice(i * 15, (i + 1) * 15)
-							.map((a) => `[${a.name}](${a.url})`)
+							.map((a) => `[${a.name}](${a.url}) ${stored.some((s) => s.name === a.name)? `<t:${stored.find(s => s.name === a.name)}:R>`: ''})}`)
 							.join('\n')
 					);
 
