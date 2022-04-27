@@ -23,7 +23,7 @@ export default {
 				latest
 					.map((a) => {
 						return `[${a.name}](https://${process.env.HOST}/mod/assign/view.php?id=${a.id}) <t:${Math.round(
-							a.due / 100
+							a.due / 1000
 						)}:R>`;
 					})
 					.join('\n')
