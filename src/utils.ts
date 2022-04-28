@@ -9,7 +9,7 @@ import { Sequelize, DataTypes } from 'sequelize';
 export async function login(cache: Cache, timeout = 15 * 1000) {
 	return new Promise<string>(async (resolve, reject) => {
 		const lastLogin = cache.lastLogin ?? 0;
-		if (Date.now() - lastLogin < 30 * 60 * 1000) return resolve(cache.cookie);
+		if (Date.now() - lastLogin < 10 * 60 * 1000) return resolve(cache.cookie);
 
 		setTimeout(() => {
 			reject(`Timed out after ${timeout}ms`);
