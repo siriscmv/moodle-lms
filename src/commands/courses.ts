@@ -42,6 +42,7 @@ export default {
 					const embed = new MessageEmbed().setTitle(`Assignments #${i + 1}`).setDescription(
 						data.assignments
 							.slice(i * 15, (i + 1) * 15)
+							.filter((a) => a.url) //FIX: Find why url is undefined
 							.map((a) => {
 								const id = new URL(a.url).searchParams.get('id')!;
 								return `[${a.name}](${a.url}) ${
