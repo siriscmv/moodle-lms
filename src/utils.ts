@@ -1,4 +1,3 @@
-import puppeteer from 'puppeteer';
 import fetch from 'node-fetch';
 import { courses, updates } from './constants.js';
 import { load as cherrioLoad } from 'cheerio';
@@ -6,33 +5,54 @@ import type { AssignmentsInstance, Cache } from './types.js';
 import { Client, MessageEmbed, BaseGuildTextChannel } from 'discord.js';
 import { Sequelize, DataTypes } from 'sequelize';
 
-export async function login(cache: Cache, timeout = 15 * 1000) {
-	return new Promise<string>(async (resolve, reject) => {
-		const lastLogin = cache.lastLogin ?? 0;
-		if (Date.now() - lastLogin < 10 * 60 * 1000) return resolve(cache.cookie);
+export async function login(cache: Cache) {
+	const lastLogin = cache.lastLogin ?? 0;
+	if (Date.now() - lastLogin < 10 * 60 * 1000) return cache.cookie;
 
-		setTimeout(() => {
-			reject(`Timed out after ${timeout}ms`);
-		}, timeout);
-		const browser = await puppeteer.launch({
-			args: ['--no-sandbox']
-		});
-		const page = await browser.newPage();
+	const initalCookie =
+		(
+			await fetch(`https://${process.env.HOST}/login/index.php`, {
+				headers: {
+					'User-Agent':
+						'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36',
+					Accept: '*/*',
+					'Accept-Encoding': 'gzip, deflate, br',
+					Connection: 'keep-alive',
+					Host: process.env.HOST!,
+					Referer: `https://${process.env.HOST}/login/index.php`
+				}
+			})
+		).headers
+			.get('set-cookie')
+			?.split(';')[0] ?? '';
 
-		let isAuthenticated = false;
-		page.on('response', (res) => {
-			if (isAuthenticated && res.headers()['set-cookie']) {
-				const cookie = res.headers()['set-cookie'].split(';')[0];
-				cache.cookie = cookie;
-				return resolve(cookie);
-			} else if (res.headers()['set-cookie']) isAuthenticated = true;
-		});
-
-		await page.goto(`https://${process.env.HOST}/login/index.php`);
-		await page.type('#username', process.env.EMAIL!);
-		await page.type('#password', process.env.PASSWORD!);
-		await page.click('#loginbtn');
+	const res = await fetch(`https://${process.env.HOST}/login/index.php`, {
+		method: 'POST',
+		headers: {
+			Cookie: initalCookie,
+			'Content-Type': 'application/x-www-form-urlencoded',
+			'User-Agent':
+				'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36',
+			Connection: 'keep-alive',
+			'Accept-language': 'en-US,en;q=0.9',
+			Host: process.env.HOST!,
+			Origin: `https://${process.env.HOST}`,
+			Referer: `https://${process.env.HOST}/login/index.php`,
+			'Sec-Fetch-Site': 'same-origin',
+			'Sec-Fetch-Mode': 'navigate',
+			'Upgrade-Insecure-Requests': '1'
+		},
+		body: `anchor=&username=${encodeURIComponent(process.env.EMAIL!)}&password=${encodeURIComponent(
+			process.env.PASSWORD!
+		)}`,
+		redirect: 'manual',
+		follow: 0
 	});
+
+	const cookie = res.headers.get('set-cookie')?.split(';')[0] ?? '';
+	cache.lastLogin = Date.now();
+	cache.cookie = cookie;
+	return cookie;
 }
 
 export async function load(cache: Cache, courseId: typeof courses[number]) {
