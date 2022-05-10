@@ -39,7 +39,7 @@ app.cache = cache;
 app.commands = new Collection();
 
 async function init() {
-	const cookie = await login(app.cache, 45 * 1000).catch(console.error);
+	const cookie = await login(app.cache).catch(console.error);
 	if (!cookie) return;
 
 	app.cache.cookie = cookie;
