@@ -206,7 +206,7 @@ export async function fetchAssignmentDetails(cache: Cache, url: string, course: 
 	return {
 		id: parseInt(new URL(url).searchParams.get('id')!),
 		name: $('div[role="main"] h2').text(), //@ts-ignore
-		due: new Date($('tr[class=""] > td:nth-child(2)')[2].firstChild.data).getTime() - (5 * 60 + 30) * 1000,
+		due: new Date($('tr[class=""] > td:nth-child(2)')[2].firstChild.data).getTime() - (5 * 60 + 30) * 60 * 1000,
 		file: $('#ygtvcontentel1 a')?.[0]?.attribs?.href ?? '',
 		course
 	};
