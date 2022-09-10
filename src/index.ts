@@ -1,11 +1,11 @@
-import { login, sync, initDB } from './utils.js';
+import { login, sync, initDB, getUpcomingAssignments } from './utils.js';
 import { Client, Collection, Options } from 'discord.js';
 import { readdirSync } from 'fs';
 
 const cache = {
 	lastLogin: 0,
 	cookie: '',
-	courses: []
+	sessionKey: ''
 };
 
 const app = new Client({
@@ -42,9 +42,6 @@ async function init() {
 	const cookie = await login(app.cache).catch(console.error);
 	if (!cookie) return;
 
-	app.cache.cookie = cookie;
-	app.cache.lastLogin = Date.now();
-
 	const commands = (
 		await Promise.all(
 			readdirSync('./dist/commands')
@@ -58,6 +55,8 @@ async function init() {
 	}
 	await initDB(app);
 	await sync(app);
+
+	getUpcomingAssignments(app).catch(console.error); //DEBUG
 }
 
 app.on('ready', () => init());

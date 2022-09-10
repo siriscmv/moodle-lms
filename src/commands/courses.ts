@@ -1,6 +1,6 @@
+// @ts-nocheck //FIX
 import { ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
 import type { courses } from '../constants.js';
-import { getAllCourses, load, scrapeAssignments } from '../utils.js';
 
 export default {
 	name: 'courses',

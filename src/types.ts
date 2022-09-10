@@ -1,11 +1,10 @@
 import type { Collection } from 'discord.js';
-import type { courses } from './constants.js';
 import type { Model, ModelStatic } from 'sequelize';
 
 export type Cache = {
 	lastLogin: number;
 	cookie: string;
-	courses: { name: string; id: typeof courses[number] }[];
+	sessionKey: string;
 };
 
 /*
