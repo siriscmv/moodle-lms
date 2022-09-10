@@ -7,3 +7,4 @@ todo.md
 *.toml
 dump*
 *.sqlite
+*-lock.yaml

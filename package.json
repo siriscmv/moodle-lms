@@ -7,20 +7,20 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "rm -rf dist && mkdir dist && tsc",
-		"start": "npm run build && node -r dotenv/config dist/index.js",
-		"sync": "npm run build && node -r dotenv/config dist/sync.js",
-		"pm2": "npm run build && pm2 start --name tasks --node-args=\"-r dotenv/config\" dist/index.js"
+		"start": "pnpm run build && node -r dotenv/config dist/index.js",
+		"sync": "pnpm run build && node -r dotenv/config dist/sync.js",
+		"pm2": "pnpm run build && pm2 start --name tasks --node-args=\"-r dotenv/config\" dist/index.js"
 	},
 	"keywords": [],
 	"author": "Siris",
 	"license": "ISC",
 	"dependencies": {
 		"cheerio": "^1.0.0-rc.10",
-		"discord.js": "^13.6.0",
+		"discord.js": "^14.3.0",
 		"dotenv": "^10.0.0",
 		"express": "^4.17.3",
-		"node-fetch": "^2.6.6",
-		"sequelize": "^6.19.0",
+		"node-fetch": "^3.2.10",
+		"sequelize": "^6.21.6",
 		"sqlite": "^4.1.1",
 		"sqlite3": "^5.0.6",
 		"typescript": "^4.6.2"
