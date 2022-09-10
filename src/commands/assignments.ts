@@ -1,4 +1,4 @@
-import { CommandInteraction, MessageEmbed } from 'discord.js';
+import { CommandInteraction, EmbedBuilder } from 'discord.js';
 import { Op } from 'sequelize';
 
 export default {
@@ -16,7 +16,7 @@ export default {
 			order: [['due', 'ASC']]
 		});
 
-		const embed = new MessageEmbed()
+		const embed = new EmbedBuilder()
 			.setTitle('Next 10 Assignments')
 			.setColor(0x00ff00)
 			.setDescription(

@@ -1,26 +1,26 @@
-import { CommandInteraction, MessageEmbed } from 'discord.js';
+import { ChatInputCommandInteraction, EmbedBuilder } from 'discord.js';
 import type { courses } from '../constants.js';
 import { getAllCourses, load, scrapeAssignments } from '../utils.js';
 
 export default {
 	name: 'courses',
-	async run(ctx: CommandInteraction) {
+	async run(ctx: ChatInputCommandInteraction) {
 		await ctx.deferReply();
 
 		if (ctx.options.getString('course')) {
 			const assignments = await load(ctx.client.cache, ctx.options.getString('course')! as typeof courses[number]);
 			const data = scrapeAssignments(assignments);
 
-			const main = new MessageEmbed()
+			const main = new EmbedBuilder()
 				.setTitle(data.name.slice(0, 50))
 				.setURL(`https://${process.env.HOST}/course/view.php?id=${ctx.options.getString('course')!}`);
 
-			const embeds: MessageEmbed[] = [];
+			const embeds: EmbedBuilder[] = [];
 
 			if (data.resources.length) {
 				const pages = data.resources.length / 15;
 				for (let i = 0; i < pages; i++) {
-					const embed = new MessageEmbed().setTitle(`Resources #${i + 1}`).setDescription(
+					const embed = new EmbedBuilder().setTitle(`Resources #${i + 1}`).setDescription(
 						data.resources
 							.slice(i * 15, (i + 1) * 15)
 							.map((r) => `[${r.name}](${r.url})`)
@@ -39,7 +39,7 @@ export default {
 				});
 
 				for (let i = 0; i < pages; i++) {
-					const embed = new MessageEmbed().setTitle(`Assignments #${i + 1}`).setDescription(
+					const embed = new EmbedBuilder().setTitle(`Assignments #${i + 1}`).setDescription(
 						data.assignments
 							.slice(i * 15, (i + 1) * 15)
 							.filter((a) => a.url) //FIX: Find why url is undefined
@@ -61,7 +61,7 @@ export default {
 			return ctx.editReply({ embeds: [main, ...embeds] });
 		} else {
 			const courses = await getAllCourses(ctx.client.cache);
-			const em = new MessageEmbed()
+			const em = new EmbedBuilder()
 				.setTitle('Courses')
 				.setDescription(
 					courses

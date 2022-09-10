@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import { courses, updates } from './constants.js';
 import { load as cherrioLoad } from 'cheerio';
 import type { AssignmentsInstance, Cache } from './types.js';
-import { Client, MessageEmbed, BaseGuildTextChannel } from 'discord.js';
+import { Client, EmbedBuilder, BaseGuildTextChannel } from 'discord.js';
 import { Sequelize, DataTypes } from 'sequelize';
 
 export async function login(cache: Cache) {
@@ -183,11 +183,11 @@ export async function sync(app: Client) {
 	const log = (await app.channels.fetch(updates)) as BaseGuildTextChannel;
 
 	for (const a of newAssignments) {
-		const em = new MessageEmbed()
-			.setTitle('New assignment')
-			.addField('Course', app.cache.courses.find((c) => `${c.id}` === `${a.course}`)!.name.slice(0, 20))
-			.addField('Name', `[${a.name}](https://${process.env.HOST}/mod/assign/view.php?id=${a.id})`)
-			.addField('Due', `<t:${Math.round(a.due / 1000)}:R>`);
+		const em = new EmbedBuilder().setTitle('New assignment').addFields([
+			{ name: 'Course', value: app.cache.courses.find((c) => `${c.id}` === `${a.course}`)!.name.slice(0, 20) },
+			{ name: 'Name', value: `[${a.name}](https://${process.env.HOST}/mod/assign/view.php?id=${a.id})` },
+			{ name: 'Due', value: `<t:${Math.round(a.due / 1000)}:R>` }
+		]);
 
 		log.send({ embeds: [em] });
 	}
