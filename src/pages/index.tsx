@@ -45,11 +45,16 @@ const Home: NextPage = () => {
 		<div className='flex flex-col justify-center items-center p-4 m-4'>
 			<h1 className='font-black text-5xl text-center text-primary'>Assignments</h1>
 			<div className={`${'text-sm text-white/50 text-center mt-4'}`}>
-				{data ? `Last refreshed ${diffToHuman(Date.now() - data!.lastRefresh!)}. Next refresh is in ${getNextRefresh()}` : 'Pulling data...'}
+				{data
+					? `Last refreshed ${diffToHuman(Date.now() - data!.lastRefresh!)}. Next refresh is in ${getNextRefresh()}`
+					: 'Pulling data...'}
 			</div>
 			<div className='flex flex-row justify-between p-4 m-4'>
 				<Link href='https://github.com/Siris01/moodle-scraper'>
-					<a target='_blank' className='bg-primary border-2 text-center border-slate rounded-md text-slate font-semibold p-2 m-2'>
+					<a
+						target='_blank'
+						className='bg-primary border-2 text-center border-slate rounded-md text-slate font-semibold p-2 m-2'
+					>
 						Star on GitHub
 					</a>
 				</Link>
