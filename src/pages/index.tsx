@@ -44,7 +44,7 @@ const Home: NextPage = () => {
 	return (
 		<div className='flex flex-col justify-center items-center p-4 m-4'>
 			<h1 className='font-black text-5xl text-center text-primary'>Assignments</h1>
-			<div className={`${'text-sm text-white/50 mt-4'}`}>
+			<div className={`${'text-sm text-white/50 text-center mt-4'}`}>
 				{data ? `Last refreshed ${diffToHuman(Date.now() - data!.lastRefresh!)}. Next refresh is in ${getNextRefresh()}` : 'Pulling data...'}
 			</div>
 			<div className='flex flex-row justify-between p-4 m-4'>
