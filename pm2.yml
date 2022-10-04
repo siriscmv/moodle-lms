@@ -1,0 +1,7 @@
+apps:
+  - name: lms
+    script: pnpm
+    watch: false
+    autorestart: true
+    args:
+      - 'start'

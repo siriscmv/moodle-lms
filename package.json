@@ -10,7 +10,7 @@
 		"dev": "run-p tw:dev next:dev",
 		"build": "npx tailwindcss -i ./src/styles/tw.css -o ./src/styles/globals.css --minify && next build",
 		"fmt": "npx prettier --write src",
-		"start": "next start",
+		"start": "next start -p 4500",
 		"prod": "pnpm run build && pnpm run start",
 		"lint": "next lint",
 		"init": "pnpm install && npx prisma db push && npx prisma generate"
