@@ -49,13 +49,13 @@ const Home: NextPage = () => {
 			</div>
 			<div className='flex flex-row justify-between p-4 m-4'>
 				<Link href='https://github.com/Siris01/moodle-scraper'>
-					<a target='_blank' className='bg-primary border-2 border-slate rounded-md text-slate font-semibold p-2 m-2'>
+					<a target='_blank' className='bg-primary border-2 text-center border-slate rounded-md text-slate font-semibold p-2 m-2'>
 						Star on GitHub
 					</a>
 				</Link>
 				<button
 					onClick={() => subscribe()}
-					className='bg-primary border-2 border-slate rounded-md text-slate font-semibold p-2 m-2'
+					className='bg-primary border-2 text-center border-slate rounded-md text-slate font-semibold p-2 m-2'
 				>
 					Enable push notifications
 				</button>
