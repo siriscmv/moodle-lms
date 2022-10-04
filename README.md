@@ -19,7 +19,6 @@
 - [Fly.io](https://fly.io)
 - [Cyclic](https://cyclic.sh/)
 - [Railway](https://railway.app) (free tier lasts for about 20 days a month)
--
 
 ## Note
 
