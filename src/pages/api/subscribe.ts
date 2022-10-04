@@ -30,7 +30,10 @@ const handler: NextApiHandler = async (req, res) => {
 		}
 	});
 
-	const payload = { title: 'LMS', body: 'This is a test message' };
+	const payload = {
+		title: 'LMS',
+		body: 'This is a test message. If you are able to see this, you will be notified of all future additions & modifications to assignments!'
+	};
 
 	await sendNotification({ endpoint: subData.endpoint, keys: { p256dh, auth } }, payload);
 
