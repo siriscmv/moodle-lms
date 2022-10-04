@@ -31,11 +31,11 @@ const Home: NextPage = () => {
 				applicationServerKey: urlBase64ToUint8Array(process.env.NEXT_PUBLIC_VAPID!)
 			});
 
-			await fetch("/api/subscribe", {
-				method: "POST",
+			await fetch('/api/subscribe', {
+				method: 'POST',
 				body: JSON.stringify(subscription),
 				headers: {
-					"content-type": "application/json"
+					'content-type': 'application/json'
 				}
 			});
 		}
@@ -49,9 +49,14 @@ const Home: NextPage = () => {
 			</div>
 			<div className='flex flex-row justify-between p-4 m-4'>
 				<Link href='https://github.com/Siris01/moodle-scraper'>
-					<a target='_blank' className='bg-primary border-2 border-slate rounded-md text-slate font-semibold p-2 m-2'>Star on GitHub</a>
+					<a target='_blank' className='bg-primary border-2 border-slate rounded-md text-slate font-semibold p-2 m-2'>
+						Star on GitHub
+					</a>
 				</Link>
-				<button onClick={() => subscribe()} className='bg-primary border-2 border-slate rounded-md text-slate font-semibold p-2 m-2'>
+				<button
+					onClick={() => subscribe()}
+					className='bg-primary border-2 border-slate rounded-md text-slate font-semibold p-2 m-2'
+				>
 					Enable push notifications
 				</button>
 			</div>
@@ -70,7 +75,10 @@ const Home: NextPage = () => {
 										<div className='text-white/90 text-md'>Due on {getDueTime(assignment.due)}</div>
 									</div>
 									<Link href={`https://${process.env.NEXT_PUBLIC_HOST}/mod/assign/view.php?id=${assignment.id}`}>
-										<a target='_blank' className='p-2 m-2 font-bold bg-primary rounded-md text-black flex flex-col justify-center'>
+										<a
+											target='_blank'
+											className='p-2 m-2 font-bold bg-primary rounded-md text-black flex flex-col justify-center'
+										>
 											<span className='inline-block align-middle'>View</span>
 										</a>
 									</Link>
@@ -89,10 +97,8 @@ const Home: NextPage = () => {
 export default Home;
 
 function urlBase64ToUint8Array(base64String: string) {
-	const padding = "=".repeat((4 - base64String.length % 4) % 4);
-	const base64 = (base64String + padding)
-		.replace(/\-/g, "+")
-		.replace(/_/g, "/");
+	const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+	const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
 
 	const rawData = window.atob(base64);
 	const outputArray = new Uint8Array(rawData.length);
@@ -101,4 +107,4 @@ function urlBase64ToUint8Array(base64String: string) {
 		outputArray[i] = rawData.charCodeAt(i);
 	}
 	return outputArray;
-} 
+}
