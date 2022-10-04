@@ -1,9 +1,9 @@
-import type { Assignment } from '@utils/getAssignments';
 import courses from '@utils/courses';
+import { diffToHuman, getDueTime } from '@utils/date';
+import type { Assignment } from '@utils/getAssignments';
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { diffToHuman, getDueTime } from '@utils/date';
 
 type ApiResponse = { lastRefresh: number; assignments: Assignment[] };
 

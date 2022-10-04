@@ -1,8 +1,7 @@
-import { schedule } from 'node-cron';
 import db from '@db';
-import getAssignments, { Assignment } from './getAssignments';
 import type { assignments } from '@prisma/client';
-import courses from './courses';
+import { schedule } from 'node-cron';
+import getAssignments, { Assignment } from './getAssignments';
 import notifyAll from './notifications';
 
 let lastRefresh: null | number = null;

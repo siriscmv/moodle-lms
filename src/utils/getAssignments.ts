@@ -48,7 +48,7 @@ export default async function getAssignments() {
 	const res = (
 		await (
 			await fetch(
-				`https://lms.ssn.edu.in/lib/ajax/service.php?sesskey=${encodeURIComponent(
+				`https://${process.env.HOST}/lib/ajax/service.php?sesskey=${encodeURIComponent(
 					creds.sessionKey
 				)}&info=core_calendar_get_action_events_by_timesort`,
 				{

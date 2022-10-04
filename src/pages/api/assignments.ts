@@ -1,6 +1,6 @@
-import type { NextApiHandler } from 'next';
 import start, { getLastRefresh } from '@utils/cron';
 import db from '@utils/db';
+import type { NextApiHandler } from 'next';
 
 const handler: NextApiHandler = async (req, res) => {
 	if (req.method !== 'GET') return res.status(405).end();

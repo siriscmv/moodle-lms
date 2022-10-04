@@ -1,6 +1,6 @@
-import type { NextApiHandler } from 'next';
-import { sendNotification } from '@utils/notifications';
 import db from '@db';
+import { sendNotification } from '@utils/notifications';
+import type { NextApiHandler } from 'next';
 
 const handler: NextApiHandler = async (req, res) => {
 	if (req.method !== 'POST') return res.status(405).end();
