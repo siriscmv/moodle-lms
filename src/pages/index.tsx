@@ -1,5 +1,5 @@
 import courses from '@utils/courses';
-import { diffToHuman, getDueTime } from '@utils/date';
+import { diffToHuman, getDueTime, getNextRefresh } from '@utils/date';
 import type { Assignment } from '@utils/getAssignments';
 import type { NextPage } from 'next';
 import Link from 'next/link';
@@ -44,8 +44,8 @@ const Home: NextPage = () => {
 	return (
 		<div className='flex flex-col justify-center items-center p-4 m-4'>
 			<h1 className='font-black text-5xl text-center text-primary'>Assigments</h1>
-			<div className={`${'text-md text-white/50 mt-4'}`}>
-				{data ? `(Last refreshed ${diffToHuman(Date.now() - data!.lastRefresh!)})` : 'Pulling data...'}
+			<div className={`${'text-sm text-white/50 mt-4'}`}>
+				{data ? `Last refreshed ${diffToHuman(Date.now() - data!.lastRefresh!)}. Next refresh is in ${getNextRefresh()}` : 'Pulling data...'}
 			</div>
 			<div className='flex flex-row justify-between p-4 m-4'>
 				<Link href='https://github.com/Siris01/moodle-scraper'>

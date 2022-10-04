@@ -1,8 +1,9 @@
-export const diffToHuman = (diff: number) => {
+export const diffToHuman = (diff: number, isFuture = false) => {
 	const seconds = Math.floor(diff / 1000);
 	const minutes = Math.floor(seconds / 60);
 
-	if (minutes < 1) return 'just now';
+	if (minutes < 1) return isFuture ? 'a few seconds' : 'a few seconds ago';
+	if (isFuture) return minutes === 1 ? '1 minute' : `${minutes} minutes`;
 	return minutes === 1 ? 'a minute ago' : `${minutes} minutes ago`;
 };
 
@@ -40,4 +41,11 @@ const accurateFutureDiff = (due: number) => {
 	if (days > 0) res = `${days}d ${res}`;
 
 	return res.trim();
+};
+
+export const getNextRefresh = () => {
+	const ms = 1000 * 60 * 15;
+	const nextRefresh = new Date(Math.ceil(new Date().getTime() / ms) * ms).getTime();
+
+	return diffToHuman(nextRefresh - Date.now(), true);
 };
