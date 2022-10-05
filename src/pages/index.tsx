@@ -1,69 +1,82 @@
 import courses from '@utils/courses';
 import { diffToHuman, getDueTime, getNextRefresh } from '@utils/date';
 import type { Assignment } from '@utils/getAssignments';
+import subscribe, { getSubscribtion, revoke } from '@utils/subscribe';
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { Bell, BellOff, BrandGithub, ExternalLink } from 'tabler-icons-react';
 
 type ApiResponse = { lastRefresh: number; assignments: Assignment[] };
 
 const Home: NextPage = () => {
 	const [data, setData] = useState<null | ApiResponse>(null);
+	const [notificationsState, setNotificationsState] = useState<null | 'enabled' | 'disabled'>(null);
 
 	useEffect(() => {
 		fetch('/api/assignments')
-			.then((res) => res.json())
+			.then((res) => {
+				if (res.ok) return res.json();
+
+				toast.error('Failed to fetch assignments');
+				return Promise.resolve([]);
+			})
 			.then((data: ApiResponse) =>
 				setData({ lastRefresh: data.lastRefresh, assignments: data.assignments.sort((a, b) => a.due - b.due) })
 			);
 	}, []);
 
-	const subscribe = async () => {
-		if ('serviceWorker' in navigator) {
-			const register = await navigator.serviceWorker.register('/worker.js', {
-				scope: '/'
-			});
-
-			await navigator.serviceWorker.ready;
-
-			const subscription = await register.pushManager.subscribe({
-				userVisibleOnly: true,
-				applicationServerKey: urlBase64ToUint8Array(process.env.NEXT_PUBLIC_VAPID!)
-			});
-
-			await fetch('/api/subscribe', {
-				method: 'POST',
-				body: JSON.stringify(subscription),
-				headers: {
+	useEffect(() => {
+		getSubscribtion().then(sub => {
+			fetch('/api/notifications', {
+				method: 'POST', headers: {
 					'content-type': 'application/json'
-				}
-			});
-		}
-	};
+				}, body: JSON.stringify({ endpoint: sub.endpoint })
+			})
+				.then((res) => res.json())
+				.then((data) => setNotificationsState(data.subscribed ? 'enabled' : 'disabled'));
+		}).catch(() => setNotificationsState('disabled'));
+	})
 
 	return (
 		<div className='flex flex-col justify-center items-center p-4 m-4'>
+			<Toaster
+				position="top-center"
+				reverseOrder={true}
+				toastOptions={{
+					duration: 10_000,
+					className: 'text-center',
+					success: {
+						style: {
+							background: '#0A4205',
+							color: '#66F359',
+						},
+					},
+					error: {
+						style: {
+							background: '#42050A',
+							color: '#f35966',
+						},
+					},
+				}}
+			/>
 			<h1 className='font-black text-5xl text-center text-primary'>Assignments</h1>
 			<div className={`${'text-sm text-white/50 text-center mt-4'}`}>
 				{data
 					? `Last refreshed ${diffToHuman(Date.now() - data!.lastRefresh!)}. Next refresh is in ${getNextRefresh()}`
 					: 'Pulling data...'}
 			</div>
-			<div className='flex flex-row justify-between p-4 m-4'>
+			<div className='flex flex-row justify-between mt-2'>
 				<Link href='https://github.com/Siris01/moodle-scraper'>
 					<a
 						target='_blank'
-						className='bg-primaryBg hover:border-primary border-2 text-center border-primaryBg rounded-md text-primary font-semibold p-2 m-2'
+						className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary border-2 text-center border-primaryBg rounded-md text-primary font-semibold p-4 m-4'
 					>
-						Star on GitHub
+						<span className='mr-2'>GitHub</span>
+						<BrandGithub />
 					</a>
 				</Link>
-				<button
-					onClick={() => subscribe()}
-					className='bg-primaryBg hover:border-primary border-2 text-center border-primaryBg rounded-md text-primary font-semibold p-2 m-2'
-				>
-					Enable push notifications
-				</button>
 			</div>
 			<div className='flex flex-col justify-center items-center p-4'>
 				{data ? (
@@ -84,7 +97,7 @@ const Home: NextPage = () => {
 											target='_blank'
 											className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
 										>
-											<span className='inline-block align-middle'>View</span>
+											<span className='inline-block align-middle'><ExternalLink /></span>
 										</a>
 									</Link>
 								</div>
@@ -95,21 +108,19 @@ const Home: NextPage = () => {
 					<div className='spinner' />
 				)}
 			</div>
+			{
+				notificationsState ? (<button onClick={() => {
+					if (notificationsState === 'enabled') {
+						revoke().then(() => setNotificationsState('disabled'));
+					} else {
+						subscribe().then(() => setNotificationsState('enabled'));
+					}
+				}} className='z-50 fixed font-bold bottom-8 left-8 rounded-full bg-primary text-slate p-4'>
+					{notificationsState === 'enabled' ? <BellOff /> : <Bell />}
+				</button>) : (<></>)
+			}
 		</div>
 	);
 };
 
 export default Home;
-
-function urlBase64ToUint8Array(base64String: string) {
-	const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-	const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
-
-	const rawData = window.atob(base64);
-	const outputArray = new Uint8Array(rawData.length);
-
-	for (let i = 0; i < rawData.length; ++i) {
-		outputArray[i] = rawData.charCodeAt(i);
-	}
-	return outputArray;
-}
