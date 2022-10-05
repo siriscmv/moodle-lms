@@ -130,6 +130,7 @@ const Home: NextPage = () => {
 			) : (
 				<></>
 			)}
+			<div className='bottom-4 text-center text-white/90 font-md'>{`Made by ${process.env.NEXT_PUBLIC_AUTHOR!}`}</div>
 		</div>
 	);
 };
