@@ -28,8 +28,10 @@ const Home: NextPage = () => {
 	}, []);
 
 	useEffect(() => {
-		getSubscribtion()
+		getSubscribtion(false)
 			.then((sub) => {
+				if (!sub) return setNotificationsState('disabled');
+
 				fetch('/api/notifications', {
 					method: 'POST',
 					headers: {

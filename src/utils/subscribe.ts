@@ -13,8 +13,12 @@ const urlBase64ToUint8Array = (base64String: string) => {
 	return outputArray;
 };
 
-export const getSubscribtion = async () => {
+export const getSubscribtion = async (force = true) => {
 	if (!('serviceWorker' in navigator)) throw new Error('Service Worker not supported');
+	if (!('Notification' in window)) throw new Error('Notifications not supported');
+
+	if (Notification.permission === 'denied') throw new Error('Notifications denied');
+	if (Notification.permission === 'default' && !force) return null;
 
 	const existingWorker = await navigator.serviceWorker.getRegistrations();
 	if (existingWorker) {
