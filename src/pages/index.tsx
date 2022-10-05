@@ -28,21 +28,25 @@ const Home: NextPage = () => {
 	}, []);
 
 	useEffect(() => {
-		getSubscribtion().then(sub => {
-			fetch('/api/notifications', {
-				method: 'POST', headers: {
-					'content-type': 'application/json'
-				}, body: JSON.stringify({ endpoint: sub.endpoint })
+		getSubscribtion()
+			.then((sub) => {
+				fetch('/api/notifications', {
+					method: 'POST',
+					headers: {
+						'content-type': 'application/json'
+					},
+					body: JSON.stringify({ endpoint: sub.endpoint })
+				})
+					.then((res) => res.json())
+					.then((data) => setNotificationsState(data.subscribed ? 'enabled' : 'disabled'));
 			})
-				.then((res) => res.json())
-				.then((data) => setNotificationsState(data.subscribed ? 'enabled' : 'disabled'));
-		}).catch(() => setNotificationsState('disabled'));
-	})
+			.catch(() => setNotificationsState('disabled'));
+	});
 
 	return (
 		<div className='flex flex-col justify-center items-center p-4 m-4'>
 			<Toaster
-				position="top-center"
+				position='top-center'
 				reverseOrder={true}
 				toastOptions={{
 					duration: 10_000,
@@ -50,15 +54,15 @@ const Home: NextPage = () => {
 					success: {
 						style: {
 							background: '#0A4205',
-							color: '#66F359',
-						},
+							color: '#66F359'
+						}
 					},
 					error: {
 						style: {
 							background: '#42050A',
-							color: '#f35966',
-						},
-					},
+							color: '#f35966'
+						}
+					}
 				}}
 			/>
 			<h1 className='font-black text-5xl text-center text-primary'>Assignments</h1>
@@ -97,7 +101,9 @@ const Home: NextPage = () => {
 											target='_blank'
 											className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
 										>
-											<span className='inline-block align-middle'><ExternalLink /></span>
+											<span className='inline-block align-middle'>
+												<ExternalLink />
+											</span>
 										</a>
 									</Link>
 								</div>
@@ -108,17 +114,22 @@ const Home: NextPage = () => {
 					<div className='spinner' />
 				)}
 			</div>
-			{
-				notificationsState ? (<button onClick={() => {
-					if (notificationsState === 'enabled') {
-						revoke().then(() => setNotificationsState('disabled'));
-					} else {
-						subscribe().then(() => setNotificationsState('enabled'));
-					}
-				}} className='z-50 fixed font-bold bottom-8 left-8 rounded-full bg-primary text-slate p-4'>
+			{notificationsState ? (
+				<button
+					onClick={() => {
+						if (notificationsState === 'enabled') {
+							revoke().then(() => setNotificationsState('disabled'));
+						} else {
+							subscribe().then(() => setNotificationsState('enabled'));
+						}
+					}}
+					className='z-50 fixed font-bold bottom-8 left-8 rounded-full bg-primary text-slate p-4'
+				>
 					{notificationsState === 'enabled' ? <BellOff /> : <Bell />}
-				</button>) : (<></>)
-			}
+				</button>
+			) : (
+				<></>
+			)}
 		</div>
 	);
 };
