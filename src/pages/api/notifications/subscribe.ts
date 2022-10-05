@@ -37,7 +37,7 @@ const handler: NextApiHandler = async (req, res) => {
 
 	await sendNotification({ endpoint: subData.endpoint, keys: { p256dh, auth } }, payload);
 
-	res.status(201).json({});
+	res.status(201).json({ success: true });
 };
 
 export default handler;
