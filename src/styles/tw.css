@@ -2,8 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('fonts/stylesheet.css');
+
 body {
-	font-family: 'Poppins', sans-serif !important;
+	font-family: 'Euclid Square', sans-serif !important;
 	font-smooth: auto;
 
 	overflow-x: hidden;

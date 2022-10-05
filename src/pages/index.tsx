@@ -65,7 +65,7 @@ const Home: NextPage = () => {
 					}
 				}}
 			/>
-			<h1 className='font-black text-5xl text-center text-primary'>Assignments</h1>
+			<h1 className='font-bold text-5xl text-center text-primary'><b>Assignments</b></h1>
 			<div className='text-sm text-white/50 text-center mt-4'>
 				{data
 					? `Last refreshed ${diffToHuman(Date.now() - data!.lastRefresh!)}. Next refresh is in ${getNextRefresh()}`

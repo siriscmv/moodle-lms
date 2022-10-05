@@ -1,0 +1,24 @@
+@font-face {
+	font-family: 'Euclid Square';
+	src: local('Euclid Square Regular'), local('Euclid-Square-Regular'), url('EuclidSquare-Regular.woff2') format('woff2'),
+		url('EuclidSquare-Regular.woff') format('woff'), url('EuclidSquare-Regular.ttf') format('truetype');
+	font-weight: 400;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Euclid Square';
+	src: local('Euclid Square Semi Bold'), local('Euclid-Square-Semi-Bold'),
+		url('EuclidSquare-SemiBold.woff2') format('woff2'), url('EuclidSquare-SemiBold.woff') format('woff'),
+		url('EuclidSquare-SemiBold.ttf') format('truetype');
+	font-weight: 600;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Euclid Square';
+	src: local('Euclid Square Bold'), local('Euclid-Square-Bold'), url('EuclidSquare-Bold.woff2') format('woff2'),
+		url('EuclidSquare-Bold.woff') format('woff'), url('EuclidSquare-Bold.ttf') format('truetype');
+	font-weight: 700;
+	font-style: normal;
+}
