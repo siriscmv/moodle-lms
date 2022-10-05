@@ -16,6 +16,23 @@ const urlBase64ToUint8Array = (base64String: string) => {
 export const getSubscribtion = async () => {
 	if (!('serviceWorker' in navigator)) throw new Error('Service Worker not supported');
 
+	const existingWorker = await navigator.serviceWorker.getRegistrations();
+	if (existingWorker) {
+		if (existingWorker.some((w) => w.active?.state === 'activated' && w.active?.scriptURL.endsWith('/worker.js'))) {
+			const reg = await navigator.serviceWorker.ready;
+
+			const subscription = await reg.pushManager.getSubscription();
+			if (subscription) return subscription;
+
+			const newSub = await reg.pushManager.subscribe({
+				userVisibleOnly: true,
+				applicationServerKey: urlBase64ToUint8Array(process.env.NEXT_PUBLIC_VAPID!)
+			});
+
+			return newSub;
+		}
+	}
+
 	const register = await navigator.serviceWorker.register('/worker.js', {
 		scope: '/'
 	});
