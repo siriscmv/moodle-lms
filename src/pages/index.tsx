@@ -49,7 +49,7 @@ const Home: NextPage = () => {
 				position='top-center'
 				reverseOrder={true}
 				toastOptions={{
-					duration: 10_000,
+					duration: 8_000,
 					className: 'text-center',
 					success: {
 						style: {
@@ -66,7 +66,7 @@ const Home: NextPage = () => {
 				}}
 			/>
 			<h1 className='font-black text-5xl text-center text-primary'>Assignments</h1>
-			<div className={`${'text-sm text-white/50 text-center mt-4'}`}>
+			<div className='text-sm text-white/50 text-center mt-4'>
 				{data
 					? `Last refreshed ${diffToHuman(Date.now() - data!.lastRefresh!)}. Next refresh is in ${getNextRefresh()}`
 					: 'Pulling data...'}
