@@ -67,7 +67,9 @@ const Home: NextPage = () => {
 					}
 				}}
 			/>
-			<h1 className='font-bold text-5xl text-center text-primary'><b>Assignments</b></h1>
+			<h1 className='font-bold text-5xl text-center text-primary'>
+				<b>Assignments</b>
+			</h1>
 			<div className='text-sm text-white/50 text-center mt-4'>
 				{data
 					? `Last refreshed ${diffToHuman(Date.now() - data!.lastRefresh!)}. Next refresh is in ${getNextRefresh()}`
@@ -99,7 +101,8 @@ const Home: NextPage = () => {
 										<div className='text-white/90 text-md'>Due on {getDueTime(assignment.due)}</div>
 									</div>
 									<Link href={`https://${process.env.NEXT_PUBLIC_HOST}/mod/assign/view.php?id=${assignment.id}`}>
-										<a aria-label={`Visit the LMS page for ${assignment.name}`}
+										<a
+											aria-label={`Visit the LMS page for ${assignment.name}`}
 											target='_blank'
 											className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
 										>
@@ -117,7 +120,8 @@ const Home: NextPage = () => {
 				)}
 			</div>
 			{notificationsState ? (
-				<button aria-label={notificationsState === 'enabled' ? 'Disable notifications' : 'enable notifications'}
+				<button
+					aria-label={notificationsState === 'enabled' ? 'Disable notifications' : 'enable notifications'}
 					onClick={() => {
 						if (notificationsState === 'enabled') {
 							revoke().then(() => setNotificationsState('disabled'));
