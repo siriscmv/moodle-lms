@@ -8,7 +8,8 @@ module.exports = {
 		extend: {
 			colors: {
 				slate: '#161616',
-				primary: '#f7b317'
+				primary: '#f7b317',
+				primaryBg: '#4B3503'
 			}
 		}
 	},

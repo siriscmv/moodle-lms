@@ -53,14 +53,14 @@ const Home: NextPage = () => {
 				<Link href='https://github.com/Siris01/moodle-scraper'>
 					<a
 						target='_blank'
-						className='bg-primary border-2 text-center border-slate rounded-md text-slate font-semibold p-2 m-2'
+						className='bg-primaryBg hover:border-primary border-2 text-center border-primaryBg rounded-md text-primary font-semibold p-2 m-2'
 					>
 						Star on GitHub
 					</a>
 				</Link>
 				<button
 					onClick={() => subscribe()}
-					className='bg-primary border-2 text-center border-slate rounded-md text-slate font-semibold p-2 m-2'
+					className='bg-primaryBg hover:border-primary border-2 text-center border-primaryBg rounded-md text-primary font-semibold p-2 m-2'
 				>
 					Enable push notifications
 				</button>
@@ -82,7 +82,7 @@ const Home: NextPage = () => {
 									<Link href={`https://${process.env.NEXT_PUBLIC_HOST}/mod/assign/view.php?id=${assignment.id}`}>
 										<a
 											target='_blank'
-											className='p-2 m-2 font-bold bg-primary rounded-md text-black flex flex-col justify-center'
+											className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
 										>
 											<span className='inline-block align-middle'>View</span>
 										</a>
