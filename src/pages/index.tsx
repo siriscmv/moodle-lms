@@ -43,7 +43,7 @@ const Home: NextPage = () => {
 					.then((data) => setNotificationsState(data.subscribed ? 'enabled' : 'disabled'));
 			})
 			.catch(() => setNotificationsState('disabled'));
-	});
+	}, []);
 
 	return (
 		<div className='flex flex-col justify-center items-center p-4 m-4'>
