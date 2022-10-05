@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 async function login(): Promise<{ cookie: string; sessionKey: string }> {
-	const initial = await fetch(`https://${process.env.HOST}/login/index.php`, {
+	const initial = await fetch(`https://${process.env.NEXT_PUBLIC_HOST}/login/index.php`, {
 		headers: defaultHeaders
 	});
 
@@ -10,7 +10,7 @@ async function login(): Promise<{ cookie: string; sessionKey: string }> {
 		await initial.text()
 	)?.[1];
 
-	const res = await fetch(`https://${process.env.HOST}/login/index.php`, {
+	const res = await fetch(`https://${process.env.NEXT_PUBLIC_HOST}/login/index.php`, {
 		method: 'POST',
 		headers: {
 			Cookie: initalCookie,
@@ -27,7 +27,7 @@ async function login(): Promise<{ cookie: string; sessionKey: string }> {
 
 	const sessionKey = (
 		await (
-			await fetch(`https://${process.env.HOST}/`, {
+			await fetch(`https://${process.env.NEXT_PUBLIC_HOST}/`, {
 				method: 'GET',
 				headers: {
 					Cookie: cookie,
@@ -48,7 +48,7 @@ export default async function getAssignments() {
 	const res = (
 		await (
 			await fetch(
-				`https://${process.env.HOST}/lib/ajax/service.php?sesskey=${encodeURIComponent(
+				`https://${process.env.NEXT_PUBLIC_HOST}/lib/ajax/service.php?sesskey=${encodeURIComponent(
 					creds.sessionKey
 				)}&info=core_calendar_get_action_events_by_timesort`,
 				{
@@ -93,8 +93,8 @@ const defaultHeaders = {
 		'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36',
 	Connection: 'keep-alive',
 	'Accept-language': 'en-US,en;q=0.9',
-	Host: process.env.HOST!,
-	Origin: `https://${process.env.HOST}`,
+	Host: process.env.NEXT_PUBLIC_HOST!,
+	Origin: `https://${process.env.NEXT_PUBLIC_HOST}`,
 	'Sec-Fetch-Site': 'same-origin',
 	'Sec-Fetch-Mode': 'navigate',
 	'Upgrade-Insecure-Requests': '1'
