@@ -36,7 +36,7 @@ const refresh = async () => {
 	const diff = compare(oldAssignments, newAssignments);
 	if (diff) notifyAll(diff);
 
-	await db.assignments.deleteMany();
+	await db.assignments.deleteMany({ where: { id: { in: newAssignments.map((a) => a.id) } } });
 	for (const a of newAssignments) {
 		await db.assignments.create({
 			data: a
