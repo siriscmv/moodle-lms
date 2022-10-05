@@ -11,7 +11,13 @@ const handler: NextApiHandler = async (req, res) => {
 		lastRefresh = getLastRefresh();
 	}
 
-	const assignments = await db.assignments.findMany();
+	const assignments = await db.assignments.findMany({
+		where: {
+			due: {
+				gt: Math.round(Date.now() / 1000)
+			}
+		}
+	});
 
 	res.status(200).json({ assignments, lastRefresh });
 };
