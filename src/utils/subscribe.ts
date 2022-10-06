@@ -77,7 +77,7 @@ export const revoke = async () => {
 
 		const res = await fetch('/api/notifications/revoke', {
 			method: 'POST',
-			body: JSON.stringify(subscription),
+			body: JSON.stringify({ endpoint: subscription?.endpoint }),
 			headers: {
 				'content-type': 'application/json'
 			}
