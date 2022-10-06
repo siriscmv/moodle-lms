@@ -49,8 +49,10 @@ const refresh = async () => {
 const compare = (oldAssignments: assignments[], newAssignments: Assignment[]) => {
 	const diff: Diff[] = [];
 
+	const dueNewAssignments = newAssignments.filter((a) => a.due > Date.now());
+
 	// Checking for new assignments
-	for (const a of newAssignments) {
+	for (const a of dueNewAssignments) {
 		if (!oldAssignments.find((b) => b.id === a.id)) {
 			diff.push({
 				id: a.id,
@@ -61,7 +63,7 @@ const compare = (oldAssignments: assignments[], newAssignments: Assignment[]) =>
 	}
 
 	// Checking for postponed/preponed assignments
-	for (const a of newAssignments) {
+	for (const a of dueNewAssignments) {
 		const old = oldAssignments.find((b) => b.id === a.id);
 		if (!old) continue; // Is a new assignment
 
@@ -75,7 +77,7 @@ const compare = (oldAssignments: assignments[], newAssignments: Assignment[]) =>
 	}
 
 	// Checking for modified assignments (could be the question, pdf file, also possibly the due date)
-	for (const a of newAssignments) {
+	for (const a of dueNewAssignments) {
 		const old = oldAssignments.find((b) => b.id === a.id);
 		if (!old) continue; // Is a new assignment
 
