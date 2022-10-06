@@ -44,46 +44,63 @@ async function login(): Promise<{ cookie: string; sessionKey: string }> {
 
 export default async function getAssignments() {
 	const creds = await login();
-	//@ts-ignore
-	const res = (
-		await (
-			await fetch(
-				`https://${process.env.NEXT_PUBLIC_HOST}/lib/ajax/service.php?sesskey=${encodeURIComponent(
-					creds.sessionKey
-				)}&info=core_calendar_get_action_events_by_timesort`,
-				{
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-						Cookie: creds.cookie,
-						...defaultHeaders
-					},
-					body: JSON.stringify([
+	const dates = getMonths();
+
+	const assignments: Assignment[] = [];
+	let isSuccess = true;
+
+	for (const date of dates) {
+		try {
+			//@ts-ignore
+			const res = (
+				await (
+					await fetch(
+						`https://${process.env.NEXT_PUBLIC_HOST}/lib/ajax/service.php?sesskey=${encodeURIComponent(
+							creds.sessionKey
+						)}&info=core_calendar_get_calendar_monthly_view`,
 						{
-							index: 0,
-							methodname: 'core_calendar_get_action_events_by_timesort',
-							args: {
-								aftereventid: 0,
-								limitnum: 50,
-								timesortfrom: Math.round(Date.now() / 1000),
-								limittononsuspendedevents: true
-							}
+							method: 'POST',
+							headers: {
+								'Content-Type': 'application/json',
+								Cookie: creds.cookie,
+								...defaultHeaders
+							},
+							body: JSON.stringify([
+								{
+									index: 0,
+									methodname: 'core_calendar_get_calendar_monthly_view',
+									args: { year: date.year, month: date.month, courseid: 1, day: 1, view: 'monthblock' }
+								}
+							])
 						}
-					])
-				}
-			)
-		).json()
-	)[0] as any;
+					)
+				).json()
+			)[0] as any;
 
-	if (res.error) return false;
+			assignments.push(
+				...res.data.weeks
+					.map((w: any) =>
+						w.days?.map((d: any) =>
+							d.events
+								?.filter((e: any) => e.eventtype === 'due')
+								.map((e: any) => ({
+									id: e.instance,
+									name: e.activityname,
+									due: e.timestart,
+									modified: e.timemodified,
+									course: e.course.id
+								}))
+						)
+					)
+					.flat(10)
+			);
+		} catch (_) {
+			isSuccess = false;
+			break;
+		}
+	}
 
-	const assignments: Assignment[] = res.data.events.map((event: any) => ({
-		id: event.instance,
-		name: event.activityname,
-		due: event.timestart,
-		modified: event.timemodified,
-		course: event.course.id
-	}));
+	if (!isSuccess) return false;
 
 	return assignments;
 }
@@ -107,3 +124,15 @@ export interface Assignment {
 	modified: number;
 	course: number;
 }
+
+const getMonths = () => {
+	const date = new Date();
+	const month = date.getMonth() + 1;
+	const year = date.getFullYear();
+
+	return [
+		{ year: month === 1 ? year - 1 : year, month: month === 1 ? 12 : month - 1 },
+		{ year, month },
+		{ year: month === 12 ? year + 1 : year, month: month === 12 ? 1 : month + 1 }
+	];
+};
