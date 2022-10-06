@@ -49,7 +49,7 @@ const refresh = async () => {
 const compare = (oldAssignments: assignments[], newAssignments: Assignment[]) => {
 	const diff: Diff[] = [];
 
-	const dueNewAssignments = newAssignments.filter((a) => a.due > Date.now());
+	const dueNewAssignments = newAssignments.filter((a) => a.due > Math.round(Date.now() / 1000));
 
 	// Checking for new assignments
 	for (const a of dueNewAssignments) {
