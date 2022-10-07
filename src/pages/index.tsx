@@ -10,6 +10,36 @@ import { Bell, BellOff, BrandGithub, ExternalLink } from 'tabler-icons-react';
 
 type ApiResponse = { lastRefresh: number; assignments: Assignment[] };
 
+const Skeleton = () => {
+	return (
+		<>
+			{
+
+				[1, 2, 3, 4, 5].map(i =>
+					<div
+						className='bg-slate border-2 border-primary p-4 m-4 self-stretch rounded-lg shadow-bottom'
+						key={i}
+					>
+						<div className='flex flex-row justify-between'>
+							<div className='flex flex-col w-48 text-slate'>
+								<div className='animate-pulse m-1 w-24 h-4 bg-white/70 text-lg font-semibold rounded-lg' />
+								<div className='animate-pulse m-1 w-20 h-4 bg-white/40 font-sm rounded-lg' />
+								<div className='animate-pulse m-1 w-32 h-4 bg-white/60 font-bold rounded-lg' />
+							</div>
+							<div
+								className='p-2 m-2 font-bold flex flex-col justify-center'
+							>
+								<span className='text-slate inline-block align-middle'>
+									<div className='w-12 h-12 rounded-xl bg-white/50' />
+								</span>
+							</div>
+						</div>
+					</div>
+				)
+			}</>
+	)
+}
+
 const Home: NextPage = () => {
 	const [data, setData] = useState<null | ApiResponse>(null);
 	const [notificationsState, setNotificationsState] = useState<null | 'enabled' | 'disabled'>(null);
@@ -115,9 +145,8 @@ const Home: NextPage = () => {
 							</div>
 						))}
 					</div>
-				) : (
-					<div className='spinner' />
-				)}
+				) : <Skeleton />
+				}
 			</div>
 			{notificationsState ? (
 				<button
