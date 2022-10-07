@@ -129,7 +129,7 @@ const Home: NextPage = () => {
 							subscribe().then(() => setNotificationsState('enabled'));
 						}
 					}}
-					className='z-50 fixed font-bold bottom-8 left-8 rounded-full bg-primary text-slate p-4'
+					className='z-50 fixed font-bold bottom-8 left-8 rounded-full bg-primary hover:bg-primary/60 text-slate p-4'
 				>
 					{notificationsState === 'enabled' ? <BellOff /> : <Bell />}
 				</button>
