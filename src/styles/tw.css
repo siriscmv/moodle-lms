@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('fonts/stylesheet.css');
-
 body {
 	font-family: 'Euclid Square', sans-serif !important;
 	font-smooth: auto;
