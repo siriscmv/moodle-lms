@@ -1,8 +1,8 @@
 import db from '@db';
 import type { assignments } from '@prisma/client';
 import { schedule } from 'node-cron';
-import getAssignments, { Assignment } from './getAssignments';
-import notifyAll from './notifications';
+import getAssignments, { Assignment } from '@utils/getAssignments';
+import notifyAll from '@utils/notifications';
 
 let lastRefresh: null | number = null;
 

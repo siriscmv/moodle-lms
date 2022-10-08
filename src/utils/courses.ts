@@ -1,4 +1,4 @@
-const getCourses = () => {
+const courses = (() => {
 	const coursesMapping: Record<number, string> = {};
 
 	const courses = process.env.NEXT_PUBLIC_COURSES!.split(' ');
@@ -9,7 +9,6 @@ const getCourses = () => {
 	}
 
 	return coursesMapping;
-};
+})();
 
-const courses = getCourses();
 export default courses;
