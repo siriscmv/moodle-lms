@@ -3,7 +3,7 @@ import webpush, { PushSubscription } from 'web-push';
 import { Diff } from './cron';
 
 export default async function notifyAll(diff: Diff[]) {
-	const msg = diff.map((d) => `${d.name} ${d.message}`).join(', ');
+	const msg = diff.map((d) => `${d.name} ${d.message}`).join('\n');
 
 	const recipients = await db.notifications.findMany();
 
