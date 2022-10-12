@@ -1,7 +1,7 @@
 import courses from '@utils/courses';
 import { diffToHuman, getDueTime, getNextRefresh } from '@utils/date';
 import type { Assignment } from '@utils/getAssignments';
-import subscribe, { getSubscribtion, revoke } from '@utils/subscribe';
+import subscribe, { getSubscription, revoke } from '@utils/subscribe';
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -43,15 +43,13 @@ const Home: NextPage = () => {
 				if (res.ok) return res.json();
 
 				toast.error('Failed to fetch assignments');
-				return Promise.resolve([]);
+				return Promise.resolve({ lastRefresh: 0, assignments: [] });
 			})
-			.then((data: ApiResponse) =>
-				setData({ lastRefresh: data.lastRefresh, assignments: data.assignments.sort((a, b) => a.due - b.due) })
-			);
+			.then((data: ApiResponse) => setData(data));
 	}, []);
 
 	useEffect(() => {
-		getSubscribtion(false)
+		getSubscription(false)
 			.then((sub) => {
 				if (!sub) return setNotificationsState('disabled');
 
@@ -74,7 +72,7 @@ const Home: NextPage = () => {
 				position='top-center'
 				reverseOrder={true}
 				toastOptions={{
-					duration: 7_000,
+					duration: 6_000,
 					className: 'text-center',
 					success: {
 						style: {

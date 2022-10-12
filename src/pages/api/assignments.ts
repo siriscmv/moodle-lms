@@ -16,6 +16,9 @@ const handler: NextApiHandler = async (req, res) => {
 			due: {
 				gt: Math.round(Date.now() / 1000)
 			}
+		},
+		orderBy: {
+			due: 'asc'
 		}
 	});
 

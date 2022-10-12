@@ -13,7 +13,7 @@ const urlBase64ToUint8Array = (base64String: string) => {
 	return outputArray;
 };
 
-export const getSubscribtion = async (force = true) => {
+export const getSubscription = async (force = true) => {
 	if (!('serviceWorker' in navigator)) throw new Error('Service Worker not supported');
 	if (!('Notification' in window)) throw new Error('Notifications not supported');
 
@@ -54,7 +54,7 @@ export const getSubscribtion = async (force = true) => {
 export default async function subscribe() {
 	let registered = false;
 	try {
-		const subscription = await getSubscribtion();
+		const subscription = await getSubscription();
 
 		const res = await fetch('/api/notifications/subscribe', {
 			method: 'POST',
@@ -67,13 +67,13 @@ export default async function subscribe() {
 		if (res.ok) registered = true;
 	} catch (_) {}
 
-	if (registered) toast.success('You are now subscribed to notifications!');
+	if (registered) toast.success('Subscribed, a test notification was sent to you.');
 	else toast.error('Unable to register push notifications, seems like your browser does not support it.');
 }
 
 export const revoke = async () => {
 	try {
-		const subscription = await getSubscribtion();
+		const subscription = await getSubscription();
 
 		const res = await fetch('/api/notifications/revoke', {
 			method: 'POST',

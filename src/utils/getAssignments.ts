@@ -5,7 +5,7 @@ async function login(): Promise<{ cookie: string; sessionKey: string }> {
 		headers: defaultHeaders
 	});
 
-	const initalCookie = initial.headers.get('set-cookie')?.split(';')[0] ?? '';
+	const initialCookie = initial.headers.get('set-cookie')?.split(';')[0] ?? '';
 	const loginToken = new RegExp(/<input type="hidden" name="logintoken" value="(.+)">/gm).exec(
 		await initial.text()
 	)?.[1];
@@ -13,7 +13,7 @@ async function login(): Promise<{ cookie: string; sessionKey: string }> {
 	const res = await fetch(`https://${process.env.NEXT_PUBLIC_HOST}/login/index.php`, {
 		method: 'POST',
 		headers: {
-			Cookie: initalCookie,
+			Cookie: initialCookie,
 			'Content-Type': 'application/x-www-form-urlencoded',
 			...defaultHeaders
 		},

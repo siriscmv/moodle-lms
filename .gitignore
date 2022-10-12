@@ -42,6 +42,7 @@ package-lock.json
 src/styles/globals.css
 
 sample.json
+.vscode
 
 *.db
 src/utils/*.db
