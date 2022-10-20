@@ -14,11 +14,8 @@ const handler: NextApiHandler = async (req, res) => {
 	const assignments = await db.assignments.findMany({
 		where: {
 			due: {
-				gt: Math.round(Date.now() / 1000)
+				gt: Math.round(Date.now() / 1000) - 30 * 24 * 60 * 60
 			}
-		},
-		orderBy: {
-			due: 'asc'
 		}
 	});
 

@@ -7,11 +7,12 @@ export const diffToHuman = (diff: number, isFuture = false) => {
 	return minutes === 1 ? 'a minute ago' : `${minutes} minutes ago`;
 };
 
-export const getDueTime = (due: number) => {
+export const getDueTime = (due: number, isPast = false) => {
 	const dueDate = new Date(due * 1000);
 	const date = `${dueDate.getDate()}${dateOrdinal(dueDate.getDate())} ${getMonth(dueDate.getMonth())}`;
-	const relative = accurateFutureDiff(due);
-	return `${date} (in ${relative})`;
+	const relative = accurateDiff(due, isPast);
+
+	return isPast ? `${date} (${relative} ago)` : `${date} (in ${relative})`;
 };
 
 const dateOrdinal = (date: number) => {
@@ -28,8 +29,8 @@ const getMonth = (month: number) => {
 	return months[month];
 };
 
-const accurateFutureDiff = (due: number) => {
-	const diff = due * 1000 - Date.now();
+const accurateDiff = (due: number, isPast = false) => {
+	const diff = isPast ? Date.now() - due * 1000 : due * 1000 - Date.now();
 	const days = Math.floor(diff / 1000 / 60 / 60 / 24);
 	const hours = Math.floor(diff / 1000 / 60 / 60) % 24;
 	const minutes = Math.floor(diff / 1000 / 60) % 60;

@@ -45,7 +45,7 @@ const Home: NextPage = () => {
 				toast.error('Failed to fetch assignments');
 				return Promise.resolve({ lastRefresh: 0, assignments: [] });
 			})
-			.then((data: ApiResponse) => setData(data));
+			.then(setData);
 	}, []);
 
 	useEffect(() => {
@@ -109,32 +109,69 @@ const Home: NextPage = () => {
 			</div>
 			<div className='flex flex-col justify-center items-center p-4'>
 				{data ? (
-					<div className='text-white'>
-						{data.assignments.map((assignment) => (
-							<div
-								className='bg-slate border-2 border-primary p-4 m-4 self-stretch rounded-lg shadow-bottom'
-								key={assignment.id}
-							>
-								<div className='flex flex-row justify-between'>
-									<div className='flex flex-col'>
-										<div className='text-lg font-semibold'>{assignment.name}</div>
-										<div className='text-white/70 text-sm'>{courses[assignment.course]}</div>
-										<div className='text-white/90 text-md'>Due on {getDueTime(assignment.due)}</div>
+					<div className='text-white flex flex-col lg:flex-row'>
+						<div>
+							<div className='p-2 font-semibold text-3xl text-center text-primary'>Upcoming</div>
+							{data.assignments
+								.filter((a) => a.due > Math.round(Date.now() / 1000))
+								.sort((a, b) => a.due - b.due)
+								.map((assignment) => (
+									<div
+										className='bg-slate border-2 border-primary p-4 m-4 self-stretch rounded-lg shadow-bottom'
+										key={assignment.id}
+									>
+										<div className='flex flex-row justify-between'>
+											<div className='flex flex-col'>
+												<div className='text-lg font-semibold'>{assignment.name}</div>
+												<div className='text-white/70 text-sm'>{courses[assignment.course]}</div>
+												<div className='text-white/90 text-md'>Due on {getDueTime(assignment.due)}</div>
+											</div>
+											<Link href={`https://${process.env.NEXT_PUBLIC_HOST}/mod/assign/view.php?id=${assignment.id}`}>
+												<a
+													aria-label={`Visit the LMS page for ${assignment.name}`}
+													target='_blank'
+													className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
+												>
+													<span className='inline-block align-middle'>
+														<ExternalLink />
+													</span>
+												</a>
+											</Link>
+										</div>
 									</div>
-									<Link href={`https://${process.env.NEXT_PUBLIC_HOST}/mod/assign/view.php?id=${assignment.id}`}>
-										<a
-											aria-label={`Visit the LMS page for ${assignment.name}`}
-											target='_blank'
-											className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
-										>
-											<span className='inline-block align-middle'>
-												<ExternalLink />
-											</span>
-										</a>
-									</Link>
-								</div>
-							</div>
-						))}
+								))}
+						</div>
+						<div>
+							<div className='mt-6 lg:mt-0 p-2 font-semibold text-3xl text-center text-primary'>Past</div>
+							{data.assignments
+								.filter((a) => a.due < Math.round(Date.now() / 1000))
+								.sort((a, b) => b.due - a.due)
+								.map((assignment) => (
+									<div
+										className='bg-slate border-2 border-primary p-4 m-4 self-stretch rounded-lg shadow-bottom'
+										key={assignment.id}
+									>
+										<div className='flex flex-row justify-between'>
+											<div className='flex flex-col'>
+												<div className='text-lg font-semibold'>{assignment.name}</div>
+												<div className='text-white/70 text-sm'>{courses[assignment.course]}</div>
+												<div className='text-white/90 text-md'>Was due on {getDueTime(assignment.due, true)}</div>
+											</div>
+											<Link href={`https://${process.env.NEXT_PUBLIC_HOST}/mod/assign/view.php?id=${assignment.id}`}>
+												<a
+													aria-label={`Visit the LMS page for ${assignment.name}`}
+													target='_blank'
+													className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
+												>
+													<span className='inline-block align-middle'>
+														<ExternalLink />
+													</span>
+												</a>
+											</Link>
+										</div>
+									</div>
+								))}
+						</div>
 					</div>
 				) : (
 					<Skeleton />
