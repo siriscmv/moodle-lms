@@ -17,9 +17,9 @@ const Skeleton = () => {
 				<div className='bg-slate border-2 border-primary p-4 m-4 self-stretch rounded-lg shadow-bottom' key={i}>
 					<div className='flex flex-row justify-between'>
 						<div className='flex flex-col w-48 text-slate'>
-							<div className='animate-pulse m-1 w-24 h-4 bg-white/70 text-lg font-semibold rounded-lg' />
-							<div className='animate-pulse m-1 w-20 h-4 bg-white/40 font-sm rounded-lg' />
-							<div className='animate-pulse m-1 w-32 h-4 bg-white/60 font-bold rounded-lg' />
+							<div className='animate-pulse m-1 w-24 h-4 bg-white/70 rounded-lg' />
+							<div className='animate-pulse m-1 w-20 h-4 bg-white/40 rounded-lg' />
+							<div className='animate-pulse m-1 w-32 h-4 bg-white/60 rounded-lg' />
 						</div>
 						<div className='p-2 m-2 font-bold flex flex-col justify-center'>
 							<span className='text-slate inline-block align-middle'>
@@ -97,14 +97,13 @@ const Home: NextPage = () => {
 					: 'Pulling data...'}
 			</div>
 			<div className='flex flex-row justify-between mt-2'>
-				<Link href='https://github.com/Siris01/moodle-scraper'>
-					<a
-						target='_blank'
-						className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary border-2 text-center border-primaryBg rounded-md text-primary font-semibold p-4 m-4'
-					>
-						<span className='mr-2'>GitHub</span>
-						<BrandGithub />
-					</a>
+				<Link
+					target='_blank'
+					className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary border-2 text-center border-primaryBg rounded-md text-primary font-semibold p-4 m-4'
+					href='https://github.com/Siris01/moodle-scraper'
+				>
+					<span className='mr-2'>GitHub</span>
+					<BrandGithub />
 				</Link>
 			</div>
 			<div className='flex flex-col justify-center items-center p-4'>
@@ -126,16 +125,15 @@ const Home: NextPage = () => {
 												<div className='text-white/70 text-sm'>{courses[assignment.course]}</div>
 												<div className='text-white/90 text-md'>Due on {getDueTime(assignment.due)}</div>
 											</div>
-											<Link href={`https://${process.env.NEXT_PUBLIC_HOST}/mod/assign/view.php?id=${assignment.id}`}>
-												<a
-													aria-label={`Visit the LMS page for ${assignment.name}`}
-													target='_blank'
-													className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
-												>
-													<span className='inline-block align-middle'>
-														<ExternalLink />
-													</span>
-												</a>
+											<Link
+												aria-label={`Visit the LMS page for ${assignment.name}`}
+												target='_blank'
+												className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
+												href={`https://${process.env.NEXT_PUBLIC_HOST}/mod/assign/view.php?id=${assignment.id}`}
+											>
+												<span className='inline-block align-middle'>
+													<ExternalLink />
+												</span>
 											</Link>
 										</div>
 									</div>
@@ -157,16 +155,15 @@ const Home: NextPage = () => {
 												<div className='text-white/70 text-sm'>{courses[assignment.course]}</div>
 												<div className='text-white/90 text-md'>Was due on {getDueTime(assignment.due, true)}</div>
 											</div>
-											<Link href={`https://${process.env.NEXT_PUBLIC_HOST}/mod/assign/view.php?id=${assignment.id}`}>
-												<a
-													aria-label={`Visit the LMS page for ${assignment.name}`}
-													target='_blank'
-													className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
-												>
-													<span className='inline-block align-middle'>
-														<ExternalLink />
-													</span>
-												</a>
+											<Link
+												aria-label={`Visit the LMS page for ${assignment.name}`}
+												target='_blank'
+												className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
+												href={`https://${process.env.NEXT_PUBLIC_HOST}/mod/assign/view.php?id=${assignment.id}`}
+											>
+												<span className='inline-block align-middle'>
+													<ExternalLink />
+												</span>
 											</Link>
 										</div>
 									</div>
@@ -194,7 +191,7 @@ const Home: NextPage = () => {
 			) : (
 				<></>
 			)}
-			<div className='bottom-4 text-center text-white/90 font-md'>{`Made by ${process.env.NEXT_PUBLIC_AUTHOR!}`}</div>
+			<div className='bottom-4 text-center text-white/90'>{`Made by ${process.env.NEXT_PUBLIC_AUTHOR!}`}</div>
 		</div>
 	);
 };

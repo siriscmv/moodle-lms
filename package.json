@@ -16,6 +16,7 @@
 		"init": "pnpm install && npx prisma db push && npx prisma generate"
 	},
 	"dependencies": {
+		"@next/font": "^13.0.2",
 		"@notionhq/client": "^2.2.2",
 		"@prisma/client": "^4.5.0",
 		"next": "13.0.2",

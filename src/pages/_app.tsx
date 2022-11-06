@@ -1,7 +1,9 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import '../styles/globals.css';
-import '../../public/fonts/stylesheet.css';
+import { Jost } from '@next/font/google';
+
+const font = Jost({ subsets: ['latin'] });
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
@@ -16,7 +18,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 				<meta name='viewport' content='width=device-width, initial-scale=1.0' />
 				<meta name='description' content='View the upcoming assignments and get notified of future ones!' />
 			</Head>
-			<Component {...pageProps} />
+			<main className={font.className}>
+				<Component {...pageProps} />
+			</main>
 		</>
 	);
 }

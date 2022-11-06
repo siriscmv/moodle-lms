@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 body {
-	font-family: 'Euclid Square', sans-serif !important;
 	font-smooth: auto;
 
 	overflow-x: hidden;
