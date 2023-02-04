@@ -1,9 +1,9 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import '../styles/globals.css';
-import { Jost } from '@next/font/google';
+import { Cabin } from '@next/font/google';
 
-const font = Jost({ subsets: ['latin'] });
+const font = Cabin({ subsets: ['latin'] });
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (

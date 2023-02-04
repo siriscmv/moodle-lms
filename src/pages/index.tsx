@@ -109,66 +109,52 @@ const Home: NextPage = () => {
 			<div className='flex flex-col justify-center items-center p-4'>
 				{data ? (
 					<div className='text-white flex flex-col lg:flex-row'>
-						<div>
-							<div className='p-2 font-semibold text-3xl text-center text-primary'>Upcoming</div>
-							{data.assignments
-								.filter((a) => a.due > Math.round(Date.now() / 1000))
-								.sort((a, b) => a.due - b.due)
-								.map((assignment) => (
-									<div
-										className='bg-slate border-2 border-primary p-4 m-4 self-stretch rounded-lg shadow-bottom'
-										key={assignment.id}
-									>
-										<div className='flex flex-row justify-between'>
-											<div className='flex flex-col'>
-												<div className='text-lg font-semibold'>{assignment.name}</div>
-												<div className='text-white/70 text-sm'>{courses[assignment.course]}</div>
-												<div className='text-white/90 text-md'>Due on {getDueTime(assignment.due)}</div>
+						{[
+							{ name: 'Upcoming', msg: 'Due on' },
+							{ name: 'Past', msg: 'Was due on' }
+						].map((section, index) => {
+							const assignments = data.assignments
+								.filter((a) => {
+									const t = Math.round(Date.now() / 1000);
+									return index === 0 ? a.due > t : a.due < t;
+								})
+								.sort((a, b) => {
+									return index === 0 ? a.due - b.due : b.due - a.due;
+								});
+
+							if (assignments.length === 0) return null;
+							return (
+								<div key={section.name}>
+									<div className='mt-6 lg:mt-0 p-2 font-semibold text-3xl text-center text-primary'>{section.name}</div>
+									{assignments.map((assignment) => (
+										<div
+											className='bg-slate border-2 border-primary p-4 m-4 self-stretch rounded-lg shadow-bottom'
+											key={assignment.id}
+										>
+											<div className='flex flex-row justify-between max-w-xs'>
+												<div className='flex flex-col'>
+													<div className='text-lg font-semibold'>{assignment.name}</div>
+													<div className='text-white/70 text-sm'>{courses[assignment.course]}</div>
+													<div className='text-white/90 text-md'>
+														{section.msg} {getDueTime(assignment.due, index === 1)}
+													</div>
+												</div>
+												<Link
+													aria-label={`Visit the LMS page for ${assignment.name}`}
+													target='_blank'
+													className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
+													href={`https://${process.env.NEXT_PUBLIC_HOST}/mod/assign/view.php?id=${assignment.id}`}
+												>
+													<span className='inline-block align-middle'>
+														<ExternalLink />
+													</span>
+												</Link>
 											</div>
-											<Link
-												aria-label={`Visit the LMS page for ${assignment.name}`}
-												target='_blank'
-												className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
-												href={`https://${process.env.NEXT_PUBLIC_HOST}/mod/assign/view.php?id=${assignment.id}`}
-											>
-												<span className='inline-block align-middle'>
-													<ExternalLink />
-												</span>
-											</Link>
 										</div>
-									</div>
-								))}
-						</div>
-						<div>
-							<div className='mt-6 lg:mt-0 p-2 font-semibold text-3xl text-center text-primary'>Past</div>
-							{data.assignments
-								.filter((a) => a.due < Math.round(Date.now() / 1000))
-								.sort((a, b) => b.due - a.due)
-								.map((assignment) => (
-									<div
-										className='bg-slate border-2 border-primary p-4 m-4 self-stretch rounded-lg shadow-bottom'
-										key={assignment.id}
-									>
-										<div className='flex flex-row justify-between'>
-											<div className='flex flex-col'>
-												<div className='text-lg font-semibold'>{assignment.name}</div>
-												<div className='text-white/70 text-sm'>{courses[assignment.course]}</div>
-												<div className='text-white/90 text-md'>Was due on {getDueTime(assignment.due, true)}</div>
-											</div>
-											<Link
-												aria-label={`Visit the LMS page for ${assignment.name}`}
-												target='_blank'
-												className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
-												href={`https://${process.env.NEXT_PUBLIC_HOST}/mod/assign/view.php?id=${assignment.id}`}
-											>
-												<span className='inline-block align-middle'>
-													<ExternalLink />
-												</span>
-											</Link>
-										</div>
-									</div>
-								))}
-						</div>
+									))}
+								</div>
+							);
+						})}
 					</div>
 				) : (
 					<Skeleton />
