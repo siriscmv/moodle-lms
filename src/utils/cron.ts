@@ -3,7 +3,6 @@ import type { assignments } from '@prisma/client';
 import { schedule } from 'node-cron';
 import getAssignments, { Assignment } from '@utils/getAssignments';
 import notifyAll from '@utils/notifications';
-import sync from '@utils/notion';
 
 let lastRefresh: null | number = null;
 
@@ -37,7 +36,6 @@ const refresh = async () => {
 	const diff = compare(oldAssignments, newAssignments);
 	if (diff) {
 		notifyAll(diff);
-		sync(newAssignments);
 	}
 
 	await db.assignments.deleteMany({ where: { id: { in: newAssignments.map((a) => a.id) } } });
