@@ -16,9 +16,9 @@ export const getDueTime = (due: number, isPast = false) => {
 };
 
 const dateOrdinal = (date: number) => {
-  if (d > 3 && d < 21) return 'th';
+  if (date > 3 && date < 21) return 'th';
 
-  switch (d % 10) {
+  switch (date % 10) {
     case 1: return 'st';
     case 2: return 'nd';
     case 3: return 'rd';
