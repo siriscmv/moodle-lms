@@ -133,11 +133,10 @@ const Home: NextPage = () => {
 										>
 											<div className='flex flex-rowr justify-between max-w-sm'>
 												<div className='flex flex-col self-center'>
-                          <div>
-	                          <span className='text-lg font-semibold'>{assignment.name}</span>
-													  {' '}
-                            <span className='text-white/70 text-sm'>{`(${courses[assignment.course]})`}</span>
-                          </div>
+													<div>
+														<span className='text-lg font-semibold'>{assignment.name}</span>{' '}
+														<span className='text-white/70 text-sm'>{`(${courses[assignment.course]})`}</span>
+													</div>
 													<div className='text-white/90 text-md'>
 														{section.msg} {getDueTime(assignment.due, index === 1)}
 													</div>
