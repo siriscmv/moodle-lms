@@ -131,8 +131,8 @@ const Home: NextPage = () => {
 											className='bg-slate border-2 border-primary p-4 m-4 self-stretch rounded-lg shadow-bottom'
 											key={assignment.id}
 										>
-											<div className='flex flex-row items-center justify-between max-w-sm'>
-												<div className='flex flex-col'>
+											<div className='flex flex-rowr justify-between max-w-sm'>
+												<div className='flex flex-col self-center'>
                           <div>
 	                          <span className='text-lg font-semibold'>{assignment.name}</span>
 													  {' '}
