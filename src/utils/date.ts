@@ -16,12 +16,14 @@ export const getDueTime = (due: number, isPast = false) => {
 };
 
 const dateOrdinal = (date: number) => {
-	const str = date.toString();
-	const last = str[str.length - 1];
-	if (last === '1') return 'st';
-	if (last === '2') return 'nd';
-	if (last === '3') return 'rd';
-	return 'th';
+  if (d > 3 && d < 21) return 'th';
+
+  switch (d % 10) {
+    case 1: return 'st';
+    case 2: return 'nd';
+    case 3: return 'rd';
+    default: return 'th';
+  }
 };
 
 const getMonth = (month: number) => {
