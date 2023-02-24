@@ -95,7 +95,7 @@ const Home: NextPage = () => {
 				{data && (Date.now() - data!.lastRefresh! < 20 * 60 * 1000)
 					? `Last refreshed ${diffToHuman(Date.now() - data!.lastRefresh!)}. Next refresh is in ${getNextRefresh()}`
 					: data ?
-						(<span className='text-danger font-bold'>LMS Might be down!</span>)
+						(<span className='text-danger font-bold'>LMS might be down!</span>)
 						: 'Pulling data...'}
 			</div>
 			<div className='flex flex-row justify-between mt-2'>
