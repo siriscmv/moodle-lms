@@ -9,7 +9,8 @@ module.exports = {
 			colors: {
 				slate: '#020202',
 				primary: '#f7b317',
-				primaryBg: '#4B3503'
+				primaryBg: '#4B3503',
+				danger: '#f35966'
 			}
 		}
 	},
