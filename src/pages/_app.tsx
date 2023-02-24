@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import '../styles/globals.css';
-import { Cabin, Inter } from '@next/font/google';
+import { Inter } from '@next/font/google';
 
 const font = Inter({ subsets: ['latin'] });
 

@@ -1,6 +1,6 @@
 import db from '@db';
 import webpush, { PushSubscription } from 'web-push';
-import { Diff } from '@utils/cron';
+import { Diff } from '@utils/syncAssignments';
 
 export default async function notifyAll(diff: Diff[]) {
 	const msg = diff.map((d) => `${d.name} ${d.message}`).join(', ');
