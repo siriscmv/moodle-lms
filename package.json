@@ -11,7 +11,7 @@
 		"build": "npx tailwindcss -i ./src/styles/tw.css -o ./src/styles/globals.css --minify && next build",
 		"fmt": "npx prettier --write src",
 		"start": "next start -p 4500",
-		"pm2": "pnpm build && pm2 start pm2.yml & sleep 60 && curl --verbose http://localhost:4500/api/init",
+		"pm2": "pnpm build && pm2 start pm2.yml && curl --verbose http://localhost:4500/api/init",
 		"fetch:dev": "sleep 10 && curl --verbose http://localhost:3000/api/init",
 		"fetch:prod": "sleep 10 && curl --silent http://localhost:4500/api/init",
 		"prod": "pnpm run build && pnpm run start",
