@@ -68,7 +68,7 @@ const Page: NextPage = () => {
                                     {topic.files.map(f => {
                                         const date = new Date(f.modified * 1000);
                                         return (
-                                            <div key={f.id} className='self-strech max-w-md w-full my-2 p-2'>
+                                            <div key={f.id} className='self-strech max-w-md w-full m-2'>
                                                 <div className='flex flex-row overflow-x-auto h-full justify-between border-2 border-primary bg-slate items-center p-4 rounded-md'>
                                                     <div className='flex flex-col'>
                                                         <span className='font-bold'>{f.name}</span>
