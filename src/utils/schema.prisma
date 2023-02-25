@@ -24,8 +24,9 @@ model notifications {
 model files {
   id       Int    @id
   name     String
+  ext      String
   topic    String
   course   Int
-  pages    Int
+  pages    Int?
   modified Int
 }

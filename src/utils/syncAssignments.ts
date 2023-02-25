@@ -5,7 +5,7 @@ import notifyAll from '@utils/notifications';
 import login, { defaultHeaders } from '@utils/login';
 import fetch from 'node-fetch';
 
-let lastRefresh: null | number = null;
+export let lastRefresh: null | number = null;
 
 export default async function start() {
 	await refresh();
@@ -171,8 +171,6 @@ const compare = (oldAssignments: assignments[], newAssignments: Assignment[]) =>
 
 	return diff.length ? diff : null;
 };
-
-export const getLastRefresh = () => lastRefresh;
 
 export interface Diff {
 	id: number;

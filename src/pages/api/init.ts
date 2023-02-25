@@ -5,14 +5,14 @@ import type { NextApiHandler } from 'next';
 let initialised = false;
 
 const handler: NextApiHandler = async (req, res) => {
+	if (initialised) return res.status(404);
 	if (req.method !== 'GET') return res.status(405).end();
-	if (initialised) return res.status(401);
 
 	initialised = true;
-	res.status(204).end();
-
 	await assignments();
 	await files();
+
+	res.status(204).end();
 };
 
 export default handler;

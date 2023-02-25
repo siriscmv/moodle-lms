@@ -1,11 +1,11 @@
-import { getLastRefresh } from '@utils/syncAssignments';
+import { lastRefresh as lr } from '@utils/syncAssignments';
 import db from '@utils/db';
 import type { NextApiHandler } from 'next';
 
 const handler: NextApiHandler = async (req, res) => {
 	if (req.method !== 'GET') return res.status(405).end();
 
-	const lastRefresh = getLastRefresh() ?? 0;
+	const lastRefresh = lr ?? 0;
 	const assignments = await db.assignments.findMany({
 		where: {
 			due: {

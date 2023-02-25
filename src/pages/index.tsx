@@ -6,7 +6,7 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
-import { Bell, BellOff, BrandGithub, ExternalLink } from 'tabler-icons-react';
+import { Bell, BellOff, BrandGithub, ExternalLink, File } from 'tabler-icons-react';
 
 type ApiResponse = { lastRefresh: number; assignments: Assignment[] };
 
@@ -106,6 +106,13 @@ const Home: NextPage = () => {
 				>
 					<span className='mr-2'>GitHub</span>
 					<BrandGithub />
+				</Link>
+				<Link
+					className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary border-2 text-center border-primaryBg rounded-md text-primary font-bold p-4 m-4'
+					href='/files'
+				>
+					<span className='mr-2'>Files</span>
+					<File />
 				</Link>
 			</div>
 			<div className='flex flex-col justify-center items-center p-4'>
