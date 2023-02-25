@@ -43,8 +43,10 @@ const refresh = async () => {
 	if (!newFiles) return;
 
 	for (const f of newFiles) {
-		await db.files.create({
-			data: f
+		await db.files.upsert({
+			where: { id: f.id },
+			update: f,
+			create: f
 		});
 	}
 
