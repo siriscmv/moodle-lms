@@ -58,17 +58,17 @@ const Page: NextPage = () => {
                     <span className='ml-2'>Go Back</span>
                 </Link>
             </div>
-            <div className='flex flex-col text-white text-lg self-center p-4 max-w-[100vw]'>
+            <div className='flex flex-col text-white text-lg self-center p-4 items-center'>
                 {files ? groupFiles(files).map(topic => {
                     return (
                         <div key={topic.name} className='m-2 p-4 w-full'>
                             <div className='items-center mx-auto justify-center'>
-                                <span className='text-2xl font-bold text-primary text-center lg:text-left'>{topic.name}</span>
-                                <div className='flex flex-wrap'>
+                                <span className='text-2xl font-bold text-primary self-center lg:text-left'>{topic.name}</span>
+                                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4'>
                                     {topic.files.map(f => {
                                         const date = new Date(f.modified * 1000);
                                         return (
-                                            <div key={f.id} className='self-strech max-w-md w-full m-2'>
+                                            <div key={f.id} className='self-strech max-w-md w-full py-2'>
                                                 <div className='flex flex-row overflow-x-auto h-full justify-between border-2 border-primary bg-slate items-center p-4 rounded-md'>
                                                     <div className='flex flex-col'>
                                                         <span className='font-bold'>{f.name}</span>
