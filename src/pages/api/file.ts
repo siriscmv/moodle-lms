@@ -20,6 +20,7 @@ const handler: NextApiHandler = async (req, res) => {
 
 	res.setHeader('Content-Type', `application/${file.ext}`);
 	res.setHeader('Content-Disposition', `inline; filename="${file.name}.${file.ext}"`);
+	res.setHeader('Cache-Control', 'public, max-age=86400');
 	res.send(resource);
 };
 
