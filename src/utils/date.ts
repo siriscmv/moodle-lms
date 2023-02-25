@@ -30,7 +30,7 @@ const dateOrdinal = (date: number) => {
 	}
 };
 
-const getMonth = (month: number) => {
+export const getMonth = (month: number) => {
 	const months = ['Jan', 'Feb', 'March', 'April', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 	return months[month];
 };

@@ -92,9 +92,7 @@ const Home: NextPage = () => {
 				<b>Assignments</b>
 			</h1>
 			<div className='text-sm text-white/50 text-center mt-4'>
-				{data ?
-					'This content is updated every 15 minutes'
-					: 'Pulling data...'}
+				{data ? 'This content is updated every 15 minutes' : 'Pulling data...'}
 			</div>
 			<div className='flex flex-row justify-between mt-2'>
 				<Link
@@ -105,7 +103,8 @@ const Home: NextPage = () => {
 					<span className='mr-2'>GitHub</span>
 					<BrandGithub />
 				</Link>
-				<button onClick={() => window.location.href = '/files'}
+				<button
+					onClick={() => (window.location.href = '/files')}
 					className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary border-2 text-center border-primaryBg rounded-md text-primary font-bold p-4 m-4'
 				>
 					<span className='mr-2'>Files</span>
@@ -131,7 +130,9 @@ const Home: NextPage = () => {
 							if (assignments.length === 0) return null;
 							return (
 								<div key={section.name}>
-									<div className='mt-6 lg:mt-0 p-2 font-extrabold text-2xl text-center text-primary'>{section.name}</div>
+									<div className='mt-6 lg:mt-0 p-2 font-extrabold text-2xl text-center text-primary'>
+										{section.name}
+									</div>
 									{assignments.map((assignment) => (
 										<div
 											className='bg-slate border-2 border-primary p-4 m-4 self-stretch rounded-lg shadow-bottom'
@@ -141,7 +142,9 @@ const Home: NextPage = () => {
 												<div className='flex flex-col self-center'>
 													<div>
 														<span className='font-bold'>{assignment.name}</span>{' '}
-														<span className='text-white/70 text-sm font-medium'>{`(${courses[assignment.course]})`}</span>
+														<span className='text-white/70 text-sm font-medium'>{`(${
+															courses[assignment.course]
+														})`}</span>
 													</div>
 													<div className='text-white/90 text-sm'>
 														{section.msg} {getDueTime(assignment.due, index === 1)}
