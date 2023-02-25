@@ -92,11 +92,9 @@ const Home: NextPage = () => {
 				<b>Assignments</b>
 			</h1>
 			<div className='text-sm text-white/50 text-center mt-4'>
-				{data && ((Date.now() - data!.lastRefresh!) < 20 * 60 * 1000)
-					? `Last refreshed ${diffToHuman(Date.now() - data!.lastRefresh!)}. Next refresh is in ${getNextRefresh()}`
-					: data ?
-						(<span className='text-danger font-bold'>LMS might be down!</span>)
-						: 'Pulling data...'}
+				{data ?
+					'This content is updated every 15 minutes'
+					: 'Pulling data...'}
 			</div>
 			<div className='flex flex-row justify-between mt-2'>
 				<Link

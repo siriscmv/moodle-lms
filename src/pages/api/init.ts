@@ -1,14 +1,13 @@
+import kv from '@utils/kv';
 import assignments from '@utils/syncAssignments';
 import files from '@utils/syncFiles';
 import type { NextApiHandler } from 'next';
 
-let initialised = false;
-
 const handler: NextApiHandler = async (req, res) => {
-	if (initialised) return res.status(404);
+	if (kv.get('init')) return res.status(404);
 	if (req.method !== 'GET') return res.status(405).end();
 
-	initialised = true;
+	kv.set('init', true);
 	await assignments();
 	await files();
 
