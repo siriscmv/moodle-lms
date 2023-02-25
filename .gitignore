@@ -48,3 +48,4 @@ sample.json
 src/utils/*.db
 
 files/**/*
+temp

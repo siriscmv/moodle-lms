@@ -8,15 +8,24 @@ generator client {
 }
 
 model assignments {
-  id        Int      @id
-  name      String
-  due       Int
-  modified  Int 
-  course    Int 
+  id       Int    @id
+  name     String
+  due      Int
+  modified Int
+  course   Int
 }
 
 model notifications {
-  endpoint  String   @id
-  p256dh    String
-  auth      String
+  endpoint String @id
+  p256dh   String
+  auth     String
+}
+
+model files {
+  id       Int    @id
+  name     String
+  topic    String
+  course   Int
+  pages    Int
+  modified Int
 }

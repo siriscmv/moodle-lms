@@ -1,6 +1,6 @@
 import courses from '@utils/courses';
 import { diffToHuman, getDueTime, getNextRefresh } from '@utils/date';
-import type { Assignment } from '@utils/getAssignments';
+import type { Assignment } from '@utils/syncAssignments';
 import subscribe, { getSubscription, revoke } from '@utils/subscribe';
 import type { NextPage } from 'next';
 import Link from 'next/link';
@@ -92,7 +92,7 @@ const Home: NextPage = () => {
 				<b>Assignments</b>
 			</h1>
 			<div className='text-sm text-white/50 text-center mt-4'>
-				{data && (Date.now() - data!.lastRefresh! < 20 * 60 * 1000)
+				{data && ((Date.now() - data!.lastRefresh!) < 20 * 60 * 1000)
 					? `Last refreshed ${diffToHuman(Date.now() - data!.lastRefresh!)}. Next refresh is in ${getNextRefresh()}`
 					: data ?
 						(<span className='text-danger font-bold'>LMS might be down!</span>)

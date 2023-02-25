@@ -12,3 +12,15 @@ const courses = (() => {
 })();
 
 export default courses;
+
+export const courseIDs = (() => {
+	const IDs: number[] = [];
+	const courses = process.env.NEXT_PUBLIC_COURSES!.split(' ');
+
+	for (const c of courses) {
+		const [id, _] = c.split('-');
+		IDs.push(parseInt(id));
+	}
+
+	return IDs;
+})();

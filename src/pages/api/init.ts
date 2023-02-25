@@ -1,4 +1,5 @@
-import start from '@utils/syncAssignments';
+import assignments from '@utils/syncAssignments';
+import files from '@utils/syncFiles';
 import type { NextApiHandler } from 'next';
 
 let initialised = false;
@@ -10,7 +11,8 @@ const handler: NextApiHandler = async (req, res) => {
 	initialised = true;
 	res.status(204).end();
 
-	await start();
+	await assignments();
+	await files();
 };
 
 export default handler;
