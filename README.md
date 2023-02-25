@@ -2,6 +2,7 @@
 
 - A Website that shows new assignments without having to autthenticate
 - Uses Web notifications to notify you of new assignments & changes to existing assignments
+- It also scrapes and stores course files (pdf/ppts). However, these require authentication (at cloudflare level) to view
 
 ## Self Hosting
 
