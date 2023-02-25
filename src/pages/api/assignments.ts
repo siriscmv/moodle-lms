@@ -1,11 +1,11 @@
-import { lastRefresh as lr } from '@utils/syncAssignments';
 import db from '@utils/db';
+import kv from '@utils/kv';
 import type { NextApiHandler } from 'next';
 
 const handler: NextApiHandler = async (req, res) => {
 	if (req.method !== 'GET') return res.status(405).end();
 
-	const lastRefresh = lr ?? 0;
+	const lastRefresh = kv.get('alr') ?? 0;
 	const assignments = await db.assignments.findMany({
 		where: {
 			due: {

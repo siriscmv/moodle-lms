@@ -4,8 +4,7 @@ import { schedule } from 'node-cron';
 import notifyAll from '@utils/notifications';
 import login, { defaultHeaders } from '@utils/login';
 import fetch from 'node-fetch';
-
-export let lastRefresh: null | number = null;
+import kv from './kv';
 
 export default async function start() {
 	await refresh();
@@ -101,7 +100,7 @@ const refresh = async () => {
 	const oldAssignments = await db.assignments.findMany();
 
 	if (JSON.stringify(oldAssignments) === JSON.stringify(newAssignments)) {
-		lastRefresh = Date.now();
+		kv.set('alr', Date.now());
 		return;
 	}
 
@@ -117,7 +116,7 @@ const refresh = async () => {
 		});
 	}
 
-	lastRefresh = Date.now();
+	kv.set('alr', Date.now());
 };
 
 const compare = (oldAssignments: assignments[], newAssignments: Assignment[]) => {

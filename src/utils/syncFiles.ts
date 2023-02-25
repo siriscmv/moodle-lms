@@ -8,6 +8,7 @@ import { promisify } from 'node:util';
 import { createWriteStream, readFileSync } from 'node:fs'; //@ts-ignore
 import * as pdf from 'pdf-page-counter';
 import fetch from 'node-fetch';
+import kv from './kv';
 
 const streamPipeline = promisify(pipeline);
 
@@ -20,8 +21,6 @@ export interface File {
 	pages: number;
 	modified: number;
 }
-
-export let lastRefresh: null | number = null;
 
 export default async function start() {
 	await refresh();
@@ -49,7 +48,7 @@ const refresh = async () => {
 		});
 	}
 
-	lastRefresh = Date.now();
+	kv.set('flr', Date.now());
 };
 
 export async function getFiles(idsToIgnore: number[]) {
