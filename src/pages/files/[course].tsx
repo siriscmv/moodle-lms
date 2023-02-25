@@ -84,7 +84,7 @@ const Page: NextPage = () => {
                                                 </div>
                                                 <Link
                                                     target='_blank'
-                                                    href={`/api/file?id=${f.id}`}
+                                                    href={`/api/file/${f.id}`}
                                                     className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
                                                 >
                                                     <span className='inline-block align-middle'>
