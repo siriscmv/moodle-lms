@@ -15,7 +15,7 @@ export const getDueTime = (due: number, isPast = false) => {
 	return isPast ? `${date} (${relative} ago)` : `${date} (in ${relative})`;
 };
 
-const dateOrdinal = (date: number) => {
+export const dateOrdinal = (date: number) => {
 	if (date > 3 && date < 21) return 'th';
 
 	switch (date % 10) {

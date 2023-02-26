@@ -1,5 +1,5 @@
 import courses from '@utils/courses';
-import { getMonth } from '@utils/date';
+import { dateOrdinal, getMonth } from '@utils/date';
 import { File } from '@utils/syncFiles';
 import type { NextPage } from 'next';
 import Link from 'next/link';
@@ -77,7 +77,7 @@ const Page: NextPage = () => {
                                                         }
                                                         <span className='font-medium text-sm'>File Type <span className='uppercase text-primary'>{f.ext}</span></span>
                                                         <div className='text-white/90 text-sm font-medium'>
-                                                            Modified on <span className='text-primary'>{getMonth(date.getMonth())} {date.getDate()}</span>
+                                                            Modified on <span className='text-primary'>{date.getDate()}{dateOrdinal(date.getDate())} {getMonth(date.getMonth())}</span>
                                                         </div>
 
                                                     </div>
