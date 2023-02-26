@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+	--primary: #f7b317;
+}
+
 body {
 	font-smooth: auto;
 
@@ -19,4 +23,18 @@ body {
 
 .shadow-top {
 	box-shadow: 0px -8px 8px rgba(0, 0, 0, 0.38);
+}
+
+::-webkit-scrollbar {
+	width: 5px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	border: 0 solid #fff;
+	border-radius: 16px;
+	background-color: var(--primary);
 }
