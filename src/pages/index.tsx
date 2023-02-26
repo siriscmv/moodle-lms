@@ -92,7 +92,7 @@ const Home: NextPage = () => {
 				<b>Assignments</b>
 			</h1>
 			<div className='text-sm text-white/50 text-center mt-4'>
-				{data ? 'This content is updated every 15 minutes' : 'Pulling data...'}
+				This content is refreshed once every 15 minutes
 			</div>
 			<div className='flex flex-row justify-between mt-2'>
 				<Link
