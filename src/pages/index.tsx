@@ -103,13 +103,14 @@ const Home: NextPage = () => {
 					<span className='mr-2'>GitHub</span>
 					<BrandGithub />
 				</Link>
-				<button
-					onClick={() => (window.location.href = '/files')}
+				<Link
+					href='/files'
+					prefetch={false}
 					className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary transition-all ease-in-out duration-150 border-2 text-center border-primaryBg rounded-md text-primary font-bold p-4 m-4'
 				>
 					<span className='mr-2'>Files</span>
 					<File />
-				</button>
+				</Link>
 			</div>
 			<div className='flex flex-col justify-center items-center p-4'>
 				{data ? (
