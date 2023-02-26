@@ -97,7 +97,7 @@ const Home: NextPage = () => {
 			<div className='flex flex-row justify-between mt-2'>
 				<Link
 					target='_blank'
-					className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary border-2 text-center border-primaryBg rounded-md text-primary font-bold p-4 m-4'
+					className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary transition-all ease-in-out duration-150 border-2 text-center border-primaryBg rounded-md text-primary font-bold p-4 m-4'
 					href='https://github.com/Siris01/moodle-scraper'
 				>
 					<span className='mr-2'>GitHub</span>
@@ -105,7 +105,7 @@ const Home: NextPage = () => {
 				</Link>
 				<button
 					onClick={() => (window.location.href = '/files')}
-					className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary border-2 text-center border-primaryBg rounded-md text-primary font-bold p-4 m-4'
+					className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary transition-all ease-in-out duration-150 border-2 text-center border-primaryBg rounded-md text-primary font-bold p-4 m-4'
 				>
 					<span className='mr-2'>Files</span>
 					<File />
@@ -142,9 +142,8 @@ const Home: NextPage = () => {
 												<div className='flex flex-col self-center'>
 													<div>
 														<span className='font-bold'>{assignment.name}</span>{' '}
-														<span className='text-white/70 text-sm font-medium'>{`(${
-															courses[assignment.course]
-														})`}</span>
+														<span className='text-white/70 text-sm font-medium'>{`(${courses[assignment.course]
+															})`}</span>
 													</div>
 													<div className='text-white/90 text-sm'>
 														{section.msg} {getDueTime(assignment.due, index === 1)}
@@ -153,7 +152,7 @@ const Home: NextPage = () => {
 												<Link
 													aria-label={`Visit the LMS page for ${assignment.name}`}
 													target='_blank'
-													className='p-2 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
+													className='p-2 m-2 font-bold bg-primaryBg hover:border-primary transition-all ease-in-out duration-150 border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
 													href={`https://${process.env.NEXT_PUBLIC_HOST}/mod/assign/view.php?id=${assignment.id}`}
 												>
 													<span className='inline-block align-middle'>
@@ -181,7 +180,7 @@ const Home: NextPage = () => {
 							subscribe().then(() => setNotificationsState('enabled'));
 						}
 					}}
-					className='z-50 fixed font-bold bottom-8 left-8 rounded-full bg-primary hover:bg-primary/60 text-slate p-4'
+					className='z-50 fixed font-bold bottom-8 left-8 rounded-full bg-primary animate-bounce hover:bg-primary/80 hover:-translate-y-2 transition-all ease-in-out duration-150 text-slate p-4'
 				>
 					{notificationsState === 'enabled' ? <BellOff /> : <Bell />}
 				</button>

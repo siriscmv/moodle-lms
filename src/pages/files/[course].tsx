@@ -51,7 +51,7 @@ const Page: NextPage = () => {
             </div>
             <div className='flex flex-row justify-between mt-2'>
                 <Link
-                    className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary border-2 text-center border-primaryBg rounded-md text-primary font-bold p-4 m-4'
+                    className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary transition-all ease-in-out duration-150 border-2 text-center border-primaryBg rounded-md text-primary font-bold p-4 m-4'
                     href='/files'
                 >
                     <ArrowLeft />
@@ -84,7 +84,7 @@ const Page: NextPage = () => {
                                                     <Link
                                                         target='_blank'
                                                         href={`/api/files/download/${f.id}`}
-                                                        className='p-3 m-2 font-bold bg-primaryBg hover:border-primary border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
+                                                        className='p-3 m-2 font-bold bg-primaryBg hover:border-primary transition-all ease-in-out duration-150 border-2 border-primaryBg rounded-md text-primary flex flex-col justify-center'
                                                     >
                                                         <span className='inline-block align-middle'>
                                                             <ExternalLink />

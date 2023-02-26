@@ -8,7 +8,7 @@ const LoginPage = () => {
 				You must authenticate yourself with the institution email account to access certain content
 			</span>
 			<Link href='/api/login' passHref>
-				<button className='bg-primaryBg border-2 p-4 m-4 rounded-md text-primary text-xl font-bold border-slate hover:border-primary'>
+				<button className='bg-primaryBg border-2 p-4 m-4 rounded-md text-primary text-xl font-bold border-slate transition-all ease-in-out duration-150 hover:border-primary'>
 					Proceed
 				</button>
 			</Link>

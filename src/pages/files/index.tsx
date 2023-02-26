@@ -12,7 +12,7 @@ const Page: NextPage = () => {
 			<div className='text-sm text-white/50 text-center mt-4'>This content is refreshed once every 24 hours</div>
 			<div className='flex flex-row justify-between mt-2'>
 				<Link
-					className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary border-2 text-center border-primaryBg rounded-md text-primary font-bold p-4 m-4'
+					className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary transition-all ease-in-out duration-150 border-2 text-center border-primaryBg rounded-md text-primary font-bold p-4 m-4'
 					href='/'
 				>
 					<ArrowLeft />
@@ -26,7 +26,7 @@ const Page: NextPage = () => {
 						<Link
 							href={`/files/${c[0]}`}
 							key={c[0]}
-							className='flex flex-row w-[96px] text-primary border-2 border-slate hover:border-primary bg-primaryBg justify-center items-center p-4 m-4 rounded-md'
+							className='flex flex-row w-[96px] text-primary border-2 border-slate hover:border-primary transition-all ease-in-out duration-150 bg-primaryBg justify-center items-center p-4 m-4 rounded-md'
 						>
 							{c[1]}
 						</Link>
