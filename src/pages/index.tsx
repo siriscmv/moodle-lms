@@ -91,9 +91,7 @@ const Home: NextPage = () => {
 			<h1 className='font-black text-5xl text-center text-primary'>
 				<b>Assignments</b>
 			</h1>
-			<div className='text-sm text-white/50 text-center mt-4'>
-				This content is refreshed once every 15 minutes
-			</div>
+			<div className='text-sm text-white/50 text-center mt-4'>This content is refreshed once every 15 minutes</div>
 			<div className='flex flex-row justify-between mt-2'>
 				<Link
 					target='_blank'
@@ -143,8 +141,9 @@ const Home: NextPage = () => {
 												<div className='flex flex-col self-center'>
 													<div>
 														<span className='font-bold'>{assignment.name}</span>{' '}
-														<span className='text-white/70 text-sm font-medium'>{`(${courses[assignment.course]
-															})`}</span>
+														<span className='text-white/70 text-sm font-medium'>{`(${
+															courses[assignment.course]
+														})`}</span>
 													</div>
 													<div className='text-white/90 text-sm'>
 														{section.msg} {getDueTime(assignment.due, index === 1)}
