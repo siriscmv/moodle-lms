@@ -19,7 +19,6 @@
 		"init": "pnpm install && npx prisma db push && npx prisma generate"
 	},
 	"dependencies": {
-		"@next/font": "^13.2.1",
 		"@prisma/client": "^4.10.1",
 		"cheerio": "1.0.0-rc.12",
 		"next": "13.2.1",

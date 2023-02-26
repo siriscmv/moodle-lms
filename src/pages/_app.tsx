@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import '../styles/globals.css';
-import { Inter } from '@next/font/google';
+import { Inter } from "next/font/google";
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import '../styles/nprogress.css';
