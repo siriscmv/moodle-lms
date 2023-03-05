@@ -48,6 +48,14 @@ const Page: NextPage = () => {
 				<b>{courses[parseInt(course as string)]}</b>
 			</h1>
 			<div className='text-sm text-white/50 text-center mt-4'>This content is refreshed once every 24 hours</div>
+			<Link
+				className='flex flex-row hover:underline justify-center items-center transition-all ease-in-out duration-150 text-base text-primary text-center mt-4'
+				target='_blank'
+				href={`https://${process.env.NEXT_PUBLIC_HOST}/course/view.php?id=${course}`}
+			>
+				<span className='mr-2'>Visit course page</span>
+				<ExternalLink />
+			</Link>
 			<div className='flex flex-row justify-between mt-2'>
 				<Link
 					className='flex flex-row justify-center items-center bg-primaryBg hover:border-primary transition-all ease-in-out duration-150 border-2 text-center border-primaryBg rounded-md text-primary font-bold p-4 m-4'
