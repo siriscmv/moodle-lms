@@ -1,7 +1,7 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import '../styles/globals.css';
-import { Inter } from 'next/font/google';
+import { Gantari } from 'next/font/google';
 import Router from 'next/router';
 import NProgress from 'nprogress';
 import '../styles/nprogress.css';
@@ -10,7 +10,7 @@ Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
 
-const font = Inter({ subsets: ['latin'] });
+const font = Gantari({ subsets: ['latin'] });
 
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
