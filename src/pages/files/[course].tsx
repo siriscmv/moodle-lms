@@ -77,22 +77,26 @@ const Page: NextPage = () => {
 											const date = new Date(f.modified * 1000);
 											return (
 												<div key={f.id} className='self-strech max-w-md w-full py-2'>
-													<div className='flex flex-row overflow-x-auto h-full justify-between border-2 border-primary bg-slate items-center p-4 rounded-md'>
-														<div className='flex flex-col'>
-															<span className='font-bold'>{f.name}</span>
-															{f.pages ? (
+													<div className='flex flex-row items-stretch overflow-x-auto h-full justify-between border-2 border-primary bg-slate items-center p-4 rounded-md'>
+														<div className='flex flex-col h-full justify-between'>
+															<div className='flex flex-col flex-grow justify-start'>
+																<span className='font-bold justify-center'>{f.name}</span>
+															</div>
+															<div className='flex flex-col'>
+																{f.pages ? (
+																	<span className='font-medium text-sm'>
+																		Pages <span className='text-primary'>{f.pages}</span>
+																	</span>
+																) : null}
 																<span className='font-medium text-sm'>
-																	Pages <span className='text-primary'>{f.pages}</span>
+																	File Type <span className='uppercase text-primary'>{f.ext}</span>
 																</span>
-															) : null}
-															<span className='font-medium text-sm'>
-																File Type <span className='uppercase text-primary'>{f.ext}</span>
-															</span>
-															<div className='text-white/90 text-sm font-medium'>
-																Modified on{' '}
-																<span className='text-primary'>
-																	{date.getDate()}
-																	{dateOrdinal(date.getDate())} {getMonth(date.getMonth())}
+																<span className='text-white/90 text-sm font-medium'>
+																	Modified on{' '}
+																	<span className='text-primary'>
+																		{date.getDate()}
+																		{dateOrdinal(date.getDate())} {getMonth(date.getMonth())}
+																	</span>
 																</span>
 															</div>
 														</div>
