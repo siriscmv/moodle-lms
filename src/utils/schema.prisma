@@ -15,12 +15,6 @@ model assignments {
   course   Int
 }
 
-model notifications {
-  endpoint String @id
-  p256dh   String
-  auth     String
-}
-
 model files {
   id       Int    @id
   name     String
@@ -29,4 +23,11 @@ model files {
   course   Int
   pages    Int?
   modified Int
+  position Int
+}
+
+model notifications {
+  endpoint String @id
+  p256dh   String
+  auth     String
 }

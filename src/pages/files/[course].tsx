@@ -131,7 +131,7 @@ export default Page;
 
 const groupFiles = (files: File[]) => {
 	const groups: { name: string; files: File[] }[] = [];
-	const sorted = files.sort((a, b) => a.modified - b.modified);
+	const sorted = files.sort((a, b) => a.position - b.position);
 
 	for (const f of sorted) {
 		const group = groups.find((g) => g.name === f.topic);
@@ -139,5 +139,5 @@ const groupFiles = (files: File[]) => {
 		else groups.push({ name: f.topic, files: [f] });
 	}
 
-	return groups.sort((a, b) => a.name.replaceAll(' ', '').localeCompare(b.name.replaceAll(' ', '')));
+	return groups;
 };

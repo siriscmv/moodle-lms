@@ -20,6 +20,7 @@ export interface File {
 	course: number;
 	pages: number;
 	modified: number;
+	position: number;
 }
 
 export default async function start() {
@@ -58,6 +59,7 @@ export async function getFiles(idsToIgnore: number[]) {
 	const newFiles: File[] = [];
 
 	for (const course of courseIDs) {
+		let position = 0;
 		const html = await (
 			await fetch(`https://${process.env.NEXT_PUBLIC_HOST}/course/view.php?id=${course}`, {
 				method: 'GET',
@@ -123,8 +125,11 @@ export async function getFiles(idsToIgnore: number[]) {
 							topic: subTopic,
 							course,
 							pages: numpages,
+							position,
 							modified: Math.round(new Date(downloaded.headers.get('last-modified')!).getTime() / 1000)
 						});
+
+						++position;
 					}
 				} catch (_) {
 					continue;
