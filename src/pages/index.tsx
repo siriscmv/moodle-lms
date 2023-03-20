@@ -141,9 +141,8 @@ const Home: NextPage = () => {
 												<div className='flex flex-col self-center'>
 													<div>
 														<span className='font-bold'>{assignment.name}</span>{' '}
-														<span className='text-white/70 text-sm font-medium'>{`(${
-															courses[assignment.course]
-														})`}</span>
+														<span className='text-white/70 text-sm font-medium'>{`(${courses[assignment.course]
+															})`}</span>
 													</div>
 													<div className='text-white/90 text-sm'>
 														{section.msg} {getDueTime(assignment.due, index === 1)}
@@ -180,7 +179,7 @@ const Home: NextPage = () => {
 							subscribe().then(() => setNotificationsState('enabled'));
 						}
 					}}
-					className='z-50 fixed font-bold bottom-8 left-8 rounded-full bg-primary animate-bounce hover:bg-primary/80 hover:-translate-y-2 transition-all ease-in-out duration-150 text-slate p-4'
+					className={`z-50 p-4 fixed text-slate font-bold bottom-8 left-8 rounded-full bg-primary hover:bg-primary/80 hover:-translate-y-2 transition-all ease-in-out duration-150 ${notificationsState === 'disabled' ? 'animate-bounce' : ''}`}
 				>
 					{notificationsState === 'enabled' ? <BellOff /> : <Bell />}
 				</button>
