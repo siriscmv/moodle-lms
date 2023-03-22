@@ -128,9 +128,9 @@ export async function getFiles(idsToIgnore: number[]) {
 							position,
 							modified: Math.round(new Date(downloaded.headers.get('last-modified')!).getTime() / 1000)
 						});
-
-						++position;
 					}
+
+					++position;
 				} catch (_) {
 					continue;
 				}
