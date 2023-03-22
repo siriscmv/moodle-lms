@@ -36,6 +36,7 @@ const Skeleton = () => {
 const Home: NextPage = () => {
 	const [data, setData] = useState<null | ApiResponse>(null);
 	const [notificationsState, setNotificationsState] = useState<null | 'enabled' | 'disabled'>(null);
+	const [newAssignments, setNewAssignments] = useState<number[]>([]);
 
 	useEffect(() => {
 		fetch('/api/assignments')
@@ -45,7 +46,18 @@ const Home: NextPage = () => {
 				toast.error('Failed to fetch assignments');
 				return Promise.resolve({ lastRefresh: 0, assignments: [] });
 			})
-			.then(setData);
+			.then((data: ApiResponse) => {
+				setData(data);
+
+				const assignments = data.assignments;
+				const seenAssignments =
+					window.localStorage
+						.getItem('seen-assignments')
+						?.split(',')
+						?.map((n) => parseInt(n)) ?? [];
+				setNewAssignments(assignments.filter((a) => !seenAssignments.includes(a.id)).map((a) => a.id));
+				window.localStorage.setItem('seen-assignments', assignments.map((a) => a.id).join(','));
+			});
 	}, []);
 
 	useEffect(() => {
@@ -134,7 +146,7 @@ const Home: NextPage = () => {
 									</div>
 									{assignments.map((assignment) => (
 										<div
-											className='bg-slate border-2 border-primary p-4 m-4 self-stretch rounded-lg shadow-bottom'
+											className='relative bg-slate border-2 border-primary p-4 m-4 self-stretch rounded-lg shadow-bottom'
 											key={assignment.id}
 										>
 											<div className='flex flex-row justify-between max-w-sm'>
@@ -160,6 +172,12 @@ const Home: NextPage = () => {
 													</span>
 												</Link>
 											</div>
+											{newAssignments.includes(assignment.id) ? (
+												<span className='flex absolute h-3 w-3 top-0 right-0 -mt-1 -mr-1'>
+													<span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-primary/90 opacity-75' />
+													<span className='relative inline-flex rounded-full h-3 w-3 bg-primary' />
+												</span>
+											) : null}
 										</div>
 									))}
 								</div>

@@ -30,6 +30,8 @@ const Page: NextPage = () => {
 	const { course } = router.query;
 
 	const [files, setFiles] = useState<File[] | null>(null);
+	const [newFiles, setNewFiles] = useState<number[]>([]);
+
 	useEffect(() => {
 		if (!course) return;
 		fetch(`/api/files?course=${course}`)
@@ -38,7 +40,18 @@ const Page: NextPage = () => {
 				if (res.ok) return res.json();
 				return Promise.resolve({ files: [] });
 			})
-			.then((d) => setFiles(d.files));
+			.then((d) => {
+				const files = d.files;
+				setFiles(files);
+
+				const seenFiles =
+					window.localStorage
+						.getItem(`seen-files-${course}`)
+						?.split(',')
+						?.map((n) => parseInt(n)) ?? [];
+				setNewFiles(files.filter((f: any) => !seenFiles.includes(f.id)).map((f: any) => f.id));
+				window.localStorage.setItem(`seen-files-${course}`, files.map((f: any) => f.id).join(','));
+			});
 	}, [course]);
 
 	if (!course) return null;
@@ -76,8 +89,8 @@ const Page: NextPage = () => {
 										{topic.files.map((f) => {
 											const date = new Date(f.modified * 1000);
 											return (
-												<div key={f.id} className='self-strech max-w-md w-full py-2'>
-													<div className='flex flex-row items-stretch overflow-x-auto h-full justify-between border-2 border-primary bg-slate items-center p-4 rounded-md'>
+												<div key={f.id} className='relative self-strech max-w-md w-full py-2'>
+													<div className='flex flex-row p-4 items-stretch overflow-x-auto h-full justify-between border-2 border-primary bg-slate rounded-md'>
 														<div className='flex flex-col h-full justify-between'>
 															<div className='flex flex-col flex-grow justify-start'>
 																<span className='font-bold justify-center'>{f.name}</span>
@@ -110,6 +123,12 @@ const Page: NextPage = () => {
 															</span>
 														</Link>
 													</div>
+													{newFiles.includes(f.id) ? (
+														<span className='flex absolute h-3 w-3 top-0 right-0 mt-1 -mr-1'>
+															<span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-primary/90 opacity-75' />
+															<span className='relative inline-flex rounded-full h-3 w-3 bg-primary' />
+														</span>
+													) : null}
 												</div>
 											);
 										})}
