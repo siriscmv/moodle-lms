@@ -5,7 +5,8 @@ import { courseIDs } from '@utils/courses';
 import * as cheerio from 'cheerio';
 import { pipeline } from 'node:stream';
 import { promisify } from 'node:util';
-import { createWriteStream, readFileSync } from 'node:fs'; //@ts-ignore
+import { readFile } from 'node:fs/promises';
+import { createWriteStream } from 'node:fs'; //@ts-ignore
 import * as pdf from 'pdf-page-counter';
 import fetch from 'node-fetch';
 import kv from './kv';
@@ -124,7 +125,8 @@ export async function getFiles(existingFiles: { id: number; modified: number }[]
 						})
 					);
 
-					const { numpages } = await pdf(readFileSync(`./files/${id}.${ext}`)).catch(() => ({
+					const downloadedFile = await readFile(`./files/${id}.${ext}`);
+					const { numpages } = await pdf(downloadedFile).catch(() => ({
 						numpages: null
 					}));
 
