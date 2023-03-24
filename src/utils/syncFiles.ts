@@ -113,7 +113,10 @@ export async function getFiles(existingFiles: { id: number; modified: number }[]
 						headers
 					});
 
-					if (existingFile && downloaded.status === 304) continue;
+					if (existingFile && downloaded.status === 304) {
+						++position;
+						continue;
+					}
 
 					const ext = downloaded.headers.get('content-disposition')!.match(/filename=".*\.(\w+)"/)![1];
 
@@ -143,6 +146,7 @@ export async function getFiles(existingFiles: { id: number; modified: number }[]
 
 					++position;
 				} catch (_) {
+					++position;
 					continue;
 				}
 			}
