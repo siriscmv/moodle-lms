@@ -37,10 +37,10 @@ export default async function start() {
 
 const refresh = async () => {
 	const files = await db.files.findMany({
-		select: { id: true, name: false, topic: false, course: false, pages: false, modified: false }
+		select: { id: true, modified: true, name: false, topic: false, course: false, pages: false }
 	});
 
-	const newFiles = await getFiles(files.map((f) => f.id));
+	const newFiles = await getFiles(files);
 	if (!newFiles) return;
 
 	for (const f of newFiles) {
@@ -54,7 +54,7 @@ const refresh = async () => {
 	kv.set('flr', Date.now());
 };
 
-export async function getFiles(idsToIgnore: number[]) {
+export async function getFiles(existingFiles: { id: number; modified: number }[]) {
 	const creds = await login();
 	const newFiles: File[] = [];
 
@@ -94,41 +94,50 @@ export async function getFiles(idsToIgnore: number[]) {
 						.join(' ');
 					const id = parseInt(url.split('id=')[1]);
 
-					if (!idsToIgnore.includes(id) && url.includes('resource')) {
-						const downloaded = await fetch(url, {
-							method: 'GET',
-							headers: {
-								'Content-Type': '*',
-								Cookie: creds.cookie,
-								...defaultHeaders
-							}
-						});
+					if (!url.includes('resource')) continue;
 
-						const ext = downloaded.headers.get('content-disposition')!.match(/filename=".*\.(\w+)"/)![1];
+					const headers: Record<string, string> = {
+						'Content-Type': '*',
+						Cookie: creds.cookie,
+						...defaultHeaders
+					};
+					const existingFile = existingFiles.find((f) => f.id === id);
 
-						await streamPipeline(
-							//@ts-ignore
-							downloaded.body!,
-							createWriteStream(`./files/${id}.${ext}`, {
-								flags: 'w'
-							})
-						);
-
-						const { numpages } = await pdf(readFileSync(`./files/${id}.${ext}`)).catch(() => ({
-							numpages: null
-						}));
-
-						newFiles.push({
-							id,
-							name,
-							ext,
-							topic: subTopic,
-							course,
-							pages: numpages,
-							position,
-							modified: Math.round(new Date(downloaded.headers.get('last-modified')!).getTime() / 1000)
-						});
+					if (existingFile) {
+						headers['If-Modified-Since'] = new Date(existingFile.modified * 1000).toUTCString();
 					}
+
+					const downloaded = await fetch(url, {
+						method: 'GET',
+						headers
+					});
+
+					if (existingFile && downloaded.status === 304) continue;
+
+					const ext = downloaded.headers.get('content-disposition')!.match(/filename=".*\.(\w+)"/)![1];
+
+					await streamPipeline(
+						//@ts-ignore
+						downloaded.body!,
+						createWriteStream(`./files/${id}.${ext}`, {
+							flags: 'w'
+						})
+					);
+
+					const { numpages } = await pdf(readFileSync(`./files/${id}.${ext}`)).catch(() => ({
+						numpages: null
+					}));
+
+					newFiles.push({
+						id,
+						name,
+						ext,
+						topic: subTopic,
+						course,
+						pages: numpages,
+						position,
+						modified: Math.round(new Date(downloaded.headers.get('last-modified')!).getTime() / 1000)
+					});
 
 					++position;
 				} catch (_) {
