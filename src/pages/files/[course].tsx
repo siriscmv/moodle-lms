@@ -91,10 +91,8 @@ const Page: NextPage = () => {
 											return (
 												<div key={f.id} className='relative self-strech max-w-md w-full py-2'>
 													<div className='flex flex-row p-4 items-stretch overflow-x-auto h-full justify-between border-2 border-primary bg-slate rounded-md'>
-														<div className='flex flex-col h-full justify-between'>
-															<div className='flex flex-col flex-grow justify-start'>
-																<span className='font-bold justify-center'>{f.name}</span>
-															</div>
+														<div className='flex flex-col h-full justify-evenly'>
+															<span className='font-bold text-lg justify-center'>{f.name}</span>
 															<div className='flex flex-col'>
 																{f.pages ? (
 																	<span className='font-medium text-sm'>
@@ -105,7 +103,7 @@ const Page: NextPage = () => {
 																	File Type <span className='uppercase text-primary'>{f.ext}</span>
 																</span>
 																<span className='text-white/90 text-sm font-medium'>
-																	Modified on{' '}
+																	Modified{' '}
 																	<span className='text-primary'>
 																		{date.getDate()}
 																		{dateOrdinal(date.getDate())} {getMonth(date.getMonth())}
