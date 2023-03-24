@@ -41,25 +41,14 @@ const refresh = async () => {
 		select: { id: true, modified: true, name: false, topic: false, course: false, pages: false }
 	});
 
-	const newFiles = await getFiles(files);
-	if (!newFiles) return;
-
-	for (const f of newFiles) {
-		await db.files.upsert({
-			where: { id: f.id },
-			update: f,
-			create: f
-		});
-	}
-
+	await getFiles(files);
 	kv.set('flr', Date.now());
 };
 
 export async function getFiles(existingFiles: { id: number; modified: number }[]) {
 	const creds = await login();
-	const newFiles: File[] = [];
 
-	for (const course of courseIDs) {
+	courseIDs.forEach(async (course) => {
 		let position = 0;
 		const html = await (
 			await fetch(`https://${process.env.NEXT_PUBLIC_HOST}/course/view.php?id=${course}`, {
@@ -114,34 +103,49 @@ export async function getFiles(existingFiles: { id: number; modified: number }[]
 					});
 
 					if (existingFile && downloaded.status === 304) {
+						console.log(`Skipped ${id}`);
 						++position;
 						continue;
 					}
 
 					const ext = downloaded.headers.get('content-disposition')!.match(/filename=".*\.(\w+)"/)![1];
+					const pos = JSON.parse(JSON.stringify(position));
 
-					await streamPipeline(
+					streamPipeline(
 						//@ts-ignore
 						downloaded.body!,
 						createWriteStream(`./files/${id}.${ext}`, {
 							flags: 'w'
 						})
-					);
+					).then(async () => {
+						console.log(`Downloaded ${id}.${ext}`);
+						const downloadedFile = await readFile(`./files/${id}.${ext}`);
 
-					const downloadedFile = await readFile(`./files/${id}.${ext}`);
-					const { numpages } = await pdf(downloadedFile).catch(() => ({
-						numpages: null
-					}));
+						let pages = null;
 
-					newFiles.push({
-						id,
-						name,
-						ext,
-						topic: subTopic,
-						course,
-						pages: numpages,
-						position,
-						modified: Math.round(new Date(downloaded.headers.get('last-modified')!).getTime() / 1000)
+						if (ext === 'pdf') {
+							const { numpages } = await pdf(downloadedFile).catch(() => ({
+								numpages: null
+							}));
+							pages = numpages;
+						}
+
+						const fileObject: File = {
+							id,
+							name,
+							ext,
+							topic: subTopic,
+							course,
+							pages,
+							position: pos,
+							modified: Math.round(new Date(downloaded.headers.get('last-modified')!).getTime() / 1000)
+						};
+
+						await db.files.upsert({
+							where: { id: fileObject.id },
+							update: fileObject,
+							create: fileObject
+						});
 					});
 
 					++position;
@@ -151,7 +155,5 @@ export async function getFiles(existingFiles: { id: number; modified: number }[]
 				}
 			}
 		}
-	}
-
-	return newFiles;
+	});
 }
