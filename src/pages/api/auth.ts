@@ -9,6 +9,6 @@ export default nextConnect().get(
 			'Set-Cookie',
 			`auth=${process.env.AUTH_COOKIE!}; Path=/; Secure; HttpOnly; Max-Age=${7 * 24 * 60 * 60}`
 		);
-		res.redirect('/');
+		res.redirect('/files');
 	}
 );
