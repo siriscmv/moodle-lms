@@ -13,7 +13,7 @@ const handler: NextApiHandler = async (req, res) => {
 
 	if (force) {
 		await prisma.files.deleteMany();
-		execSync('rm -rf ./files/* && mkdir ./files');
+		execSync('rm -rf ./files/ && mkdir ./files/');
 	}
 
 	kv.set('init', true);
