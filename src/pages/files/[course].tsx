@@ -11,7 +11,7 @@ const Skeleton = () => {
 	return (
 		<div className='flex flex-wrap justify-center items-center'>
 			{[1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
-				<div key={i} className='self-strech max-w-md w-full sm:w-md my-2 pr-4'>
+				<div key={i} className='self-stretch max-w-md w-full sm:w-md my-2 pr-4'>
 					<div className='flex flex-row h-full justify-between  border-2 border-primary bg-slate items-center p-4 rounded-md'>
 						<div className='flex flex-col'>
 							<div className='animate-pulse m-1 w-56 h-8 bg-white/60 rounded-lg' />
@@ -89,7 +89,7 @@ const Page: NextPage = () => {
 										{topic.files.map((f) => {
 											const date = new Date(f.modified * 1000);
 											return (
-												<div key={f.id} className='relative self-strech max-w-md w-full py-2'>
+												<div key={f.id} className='relative self-stretch max-w-md w-full py-2'>
 													<div className='flex flex-row p-4 items-stretch overflow-x-auto h-full justify-between border-2 border-primary bg-slate rounded-md'>
 														<div className='flex flex-col h-full justify-evenly'>
 															<span className='font-bold text-lg justify-center'>{f.name}</span>
