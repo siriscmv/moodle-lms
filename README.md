@@ -4,6 +4,11 @@
 - Uses Web notifications to notify you of new assignments & changes to existing assignments
 - It also scrapes and stores course files (pdf/ppts). However, these require authentication (at cloudflare level) to view
 
+## Screenshots
+![ss1](https://github.com/siriscmv/moodle-scraper/assets/40269790/6b0baff3-0547-4ee9-a3ee-7c48214360b1)  
+![ss2](https://github.com/siriscmv/moodle-scraper/assets/40269790/e63d760b-2a0c-48a2-8f81-dcfe5fd36513)
+
+
 ## Self Hosting
 
 - Clone the repository
