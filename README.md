@@ -1,8 +1,8 @@
-# Moodle Scraper
+# Moodle LMS
 
-- A Website that shows new assignments without having to authenticate
+- A Website that shows new assignments (from a moodle based website) without having to authenticate
 - Uses Web notifications to notify you of new assignments & changes to existing assignments
-- It also scrapes and stores course files (pdf/ppts). However, these require authentication (at cloudflare level) to view
+- It also keeps a backup of course files (pdf/ppts). However, these require authentication (at cloudflare level) to view
 
 ## Screenshots
 ![ss1](https://github.com/siriscmv/moodle-scraper/assets/40269790/6b0baff3-0547-4ee9-a3ee-7c48214360b1)  
